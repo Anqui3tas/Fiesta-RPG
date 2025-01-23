@@ -7,6 +7,6 @@ null,
 {"id":5,"expanded":false,"name":"Inn","order":6,"parentId":3,"scrollX":444,"scrollY":344.72727272727275,"quick":false},
 {"id":6,"expanded":false,"name":"Shop 1","order":7,"parentId":3,"scrollX":488.4,"scrollY":388.79999999999995,"quick":false},
 {"id":7,"expanded":false,"name":"intro cutscene","order":2,"parentId":1,"scrollX":646,"scrollY":421.3333333333333,"quick":false},
-{"id":8,"expanded":true,"name":"Isya","order":8,"parentId":0,"scrollX":3968,"scrollY":3400,"quick":false},
-{"id":9,"expanded":false,"name":"Roumen","order":9,"parentId":8,"scrollX":816,"scrollY":1280,"quick":false}
+{"id":8,"expanded":true,"name":"Isya","order":8,"parentId":0,"scrollX":3984,"scrollY":3492,"quick":false},
+{"id":9,"expanded":false,"name":"Roumen","order":9,"parentId":8,"scrollX":324.6666666666667,"scrollY":1548,"quick":false}
 ]
