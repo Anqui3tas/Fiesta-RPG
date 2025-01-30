@@ -8,5 +8,10 @@ null,
 {"id":6,"expanded":false,"name":"Shop 1","order":7,"parentId":3,"scrollX":488.4,"scrollY":388.79999999999995,"quick":false},
 {"id":7,"expanded":false,"name":"intro cutscene","order":2,"parentId":1,"scrollX":646,"scrollY":421.3333333333333,"quick":false},
 {"id":8,"expanded":true,"name":"Isya","order":8,"parentId":0,"scrollX":3984,"scrollY":3492,"quick":false},
-{"id":9,"expanded":false,"name":"Roumen","order":9,"parentId":8,"scrollX":540.6666666666666,"scrollY":1424.6666666666667,"quick":false}
+{"id":9,"expanded":true,"name":"Roumen","order":9,"parentId":8,"scrollX":1035.4285714285713,"scrollY":1004.5714285714286,"quick":false},
+{"id":10,"expanded":false,"name":"RouForge","order":10,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":11,"expanded":false,"name":"RouItem","order":11,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":12,"expanded":false,"name":"RouBeauty","order":12,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":13,"expanded":false,"name":"GuildHall","order":13,"parentId":9,"scrollX":1035.4285714285713,"scrollY":735.4285714285713,"quick":false},
+{"id":14,"expanded":false,"name":"RouSkill","order":14,"parentId":9,"scrollX":1035.4285714285713,"scrollY":735.4285714285713,"quick":false}
 ]
