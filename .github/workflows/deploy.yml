@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [$default-branch]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,8 +36,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload only the folder containing your index.html
-          path: '2DFiesta/Deploy/Fiesta'
+          # Upload entire repository
+          path: 'Deploy/Fiesta'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
