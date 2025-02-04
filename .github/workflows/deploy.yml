@@ -18,14 +18,19 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
 
+    - name: Create gh-pages branch if it does not exist
+      run: |
+        git fetch origin gh-pages || echo "No gh-pages branch yet"
+        git checkout -b gh-pages || git checkout gh-pages
+
     - name: Copy files to GitHub Pages folder
       run: |
         mkdir -p gh-pages
         cp -r Deploy/Fiesta/* gh-pages/
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./gh-pages
-        publish_branch: gh-pages  # This is the default branch for GitHub Pages
+    - name: Commit and push changes
+      run: |
+        cd gh-pages
+        git add .
+        git commit -m "Deploy site to GitHub Pages" || echo "No changes to commit"
+        git push origin gh-pages --force
