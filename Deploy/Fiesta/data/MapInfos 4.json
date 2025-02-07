@@ -1,0 +1,22 @@
+[
+null,
+{"id":1,"expanded":true,"name":"Cutscene","order":1,"parentId":0,"scrollX":1035.4285714285713,"scrollY":721.7142857142857,"quick":false},
+null,
+{"id":3,"expanded":true,"name":"Town","order":15,"parentId":8,"scrollX":1035.4285714285713,"scrollY":721.7142857142857,"quick":false},
+{"id":4,"expanded":false,"name":"House 1","order":16,"parentId":3,"scrollX":1035.4285714285713,"scrollY":721.7142857142857,"quick":false},
+{"id":5,"expanded":false,"name":"Inn","order":17,"parentId":3,"scrollX":444,"scrollY":344.72727272727275,"quick":false},
+{"id":6,"expanded":false,"name":"Shop 1","order":18,"parentId":3,"scrollX":488.4,"scrollY":388.79999999999995,"quick":false},
+{"id":7,"expanded":true,"name":"Intro Cutscene Pt1","order":2,"parentId":1,"scrollX":894,"scrollY":742.2857142857142,"quick":false},
+{"id":8,"expanded":true,"name":"Isya","order":8,"parentId":0,"scrollX":3750,"scrollY":3394,"quick":false},
+{"id":9,"expanded":true,"name":"Roumen","order":9,"parentId":8,"scrollX":894,"scrollY":961.7142857142857,"quick":false},
+{"id":10,"expanded":false,"name":"RouForge","order":10,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":11,"expanded":false,"name":"RouItem","order":11,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":12,"expanded":false,"name":"RouBeauty","order":12,"parentId":9,"scrollX":816,"scrollY":640,"quick":false},
+{"id":13,"expanded":false,"name":"GuildHall","order":13,"parentId":9,"scrollX":1035.4285714285713,"scrollY":735.4285714285713,"quick":false},
+{"id":14,"expanded":false,"name":"RouSkill","order":14,"parentId":9,"scrollX":1035.4285714285713,"scrollY":735.4285714285713,"quick":false},
+{"id":15,"expanded":true,"name":"Intro Cutscene Pt2","order":3,"parentId":7,"scrollX":635.4,"scrollY":584.4,"quick":false},
+{"id":16,"expanded":true,"name":"Intro Cutscene Pt3","order":4,"parentId":15,"scrollX":625.8,"scrollY":519.6,"quick":false},
+{"id":17,"expanded":true,"name":"Intro Cutscene Pt4","order":5,"parentId":16,"scrollX":0,"scrollY":0,"quick":false},
+{"id":18,"expanded":true,"name":"Intro Cutscene Pt5","order":6,"parentId":17,"scrollX":0,"scrollY":0,"quick":false},
+{"id":19,"expanded":false,"name":"Intro Cutscene Pt6","order":7,"parentId":18,"scrollX":1035.4285714285713,"scrollY":721.7142857142857,"quick":false}
+]
