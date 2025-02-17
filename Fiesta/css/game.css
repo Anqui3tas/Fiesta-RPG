@@ -3,7 +3,13 @@ body {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: black;
 }
+
+/* Existing error and loading styles remain unchanged */
 #errorPrinter {
     position: absolute;
     left: 50%;
@@ -113,4 +119,179 @@ body {
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* --- Additional Styles for Full-Screen and Overlay Controls --- */
+
+/* Make the document fill the entire viewport and keep a black background */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    overflow: hidden;
+}
+
+/* Main container for the game canvas */
+#gameContainer {
+    display: flex;
+    justify-content: center;  /* horizontally center */
+    align-items: center;      /* vertically center */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    overflow: hidden;
+}
+
+/* Let the engine handle the canvas size. 
+   We remove absolute positioning so flex can center it. */
+#gameContainer canvas {
+    position: static;  /* or 'relative' if you prefer, but not absolute */
+    transform: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Virtual joystick container (bottom-left) */
+#joystickContainer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    z-index: 999; /* Above the canvas */
+}
+
+/* Action buttons container (bottom-right) */
+#actionButtonsContainer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999; /* Above the canvas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for individual action buttons */
+#actionButtonsContainer button {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Overlay for rotate message */
+#rotateMessage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    display: none; /* Hidden by default; shown only in portrait */
+    text-align: center;
+    padding-top: 45%;
+    font-size: 24px;
+    z-index: 1000; /* Above the canvas and controls */
+}
+
+/* When in portrait mode, hide the game elements and show rotate message */
+@media screen and (orientation: portrait) {
+    #rotateMessage {
+        display: block;
+    }
+    #gameContainer,
+    #joystickContainer,
+    #actionButtonsContainer,
+    #exitButtonContainer {
+        display: none;
+    }
+}
+
+/* When in landscape mode, hide the rotate message and show game elements */
+@media screen and (orientation: landscape) {
+    #rotateMessage {
+        display: none;
+    }
+    #gameContainer,
+    #joystickContainer,
+    #actionButtonsContainer,
+    #exitButtonContainer {
+        display: block;
+    }
+}
+
+/* --- Exit/Home Button Styles (top-right) --- */
+#exitButtonContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Above the canvas */
+}
+#exitButton {
+    width: 60px;
+    height: 50px;
+    background-color: #444;
+    border: 2px solid #888;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* --- Confirmation Modal Styles --- */
+#exitConfirmModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    z-index: 2000; /* Above everything else */
+}
+#exitConfirmModal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    max-width: 300px;
+    padding: 20px;
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 8px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+#exitConfirmModal .modal-content p {
+    margin-bottom: 20px;
+}
+#exitConfirmModal .modal-content button {
+    width: 80px;
+    padding: 10px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+#confirmYes {
+    background-color: #d9534f;
+    color: #fff;
+}
+#confirmNo {
+    background-color: #5bc0de;
+    color: #fff;
 }
