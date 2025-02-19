@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="icon/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon/icon.png">
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <title>Fiesta Online</title>
+    
+    <!-- Load nippleJS from unpkg -->
+    <script src="https://unpkg.com/nipplejs@0.7.3/dist/nipplejs.min.js"></script>
+  </head>
+  <body>
+    <!-- Optional rotate message overlay -->
+    <div id="rotateMessage">Please rotate your device to landscape mode.</div>
+
+    <!-- Main game container (flex-based) -->
+    <div id="gameContainer"></div>
+
+    <!-- Virtual joystick container (bottom-left) -->
+    <div id="joystickContainer"></div>
+
+    <!-- Action buttons container (bottom-right) -->
+    <div id="actionButtonsContainer">
+      <button id="buttonA">A</button>
+      <button id="buttonB">B</button>
+    </div>
+
+    <!-- HOME button container (top-right) -->
+    <div id="exitButtonContainer">
+      <button id="exitButton">HOME</button>
+    </div>
+
+    <!-- Confirmation modal for HOME exit -->
+    <div id="exitConfirmModal">
+      <div class="modal-content">
+        <p>Are you sure you want to exit?<br><small>Please save your game first!</small></p>
+        <button id="confirmYes">Yes</button>
+        <button id="confirmNo">No</button>
+      </div>
+    </div>
+
+    <!-- Load main game scripts -->
+    <script src="js/plugins/FOSSIL.js"></script>
+    
+    <!-- Wait for the canvas to be created, then move it into #gameContainer -->
+    <script>
+      function waitForCanvas() {
+        const canvas = document.querySelector('canvas');
+        if (canvas) {
+          // Remove any inline styles so that our flex-based CSS can take over.
+          canvas.removeAttribute("style");
+          // Append the canvas to the #gameContainer.
+          document.getElementById('gameContainer').appendChild(canvas);
+          console.log("Canvas found, moved, and inline styles removed.");
+        } else {
+          console.warn("Canvas not found yet. Retrying in 500ms...");
+          setTimeout(waitForCanvas, 500);
+        }
+      }
+      window.addEventListener('load', waitForCanvas);
+    </script>
+    
+    <!-- Set up input simulation, joystick, and buttons after DOM is loaded -->
+    <script>
+      // Helper functions to simulate key events.
+      function simulateKeyEvent(type, keyCode) {
+        const event = new KeyboardEvent(type, {
+          keyCode: keyCode,
+          which: keyCode,
+          bubbles: true
+        });
+        document.dispatchEvent(event);
+      }
+      
+      function simulateKeyDown(keyCode) {
+        simulateKeyEvent('keydown', keyCode);
+      }
+      
+      function simulateKeyUp(keyCode) {
+        simulateKeyEvent('keyup', keyCode);
+      }
+      
+      // Map joystick directions to arrow key codes.
+      function directionToKeyCode(direction) {
+        switch(direction) {
+          case 'up':    return 38;
+          case 'down':  return 40;
+          case 'left':  return 37;
+          case 'right': return 39;
+          default: return null;
+        }
+      }
+      
+      let currentDirection = null;
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        // Create the joystick.
+        const joystickSensitivity = 0.5;
+        const joystick = nipplejs.create({
+          zone: document.getElementById('joystickContainer'),
+          mode: 'static',
+          position: { left: '50%', top: '50%' },
+          size: 100,
+          color: 'white',
+          threshold: joystickSensitivity
+        });
+        
+        joystick.on('move', (evt, data) => {
+          if (data.direction) {
+            const newDir = data.direction.angle;
+            if (newDir !== currentDirection) {
+              if (currentDirection) {
+                const prevKey = directionToKeyCode(currentDirection);
+                if (prevKey) simulateKeyUp(prevKey);
+              }
+              const newKey = directionToKeyCode(newDir);
+              if (newKey) {
+                simulateKeyDown(newKey);
+                currentDirection = newDir;
+              }
+            }
+          }
+        });
+        
+        joystick.on('end', () => {
+          if (currentDirection) {
+            const key = directionToKeyCode(currentDirection);
+            if (key) simulateKeyUp(key);
+            currentDirection = null;
+          }
+        });
+        
+        // HOME button and modal.
+        const exitButton = document.getElementById('exitButton');
+        const exitConfirmModal = document.getElementById('exitConfirmModal');
+        const confirmYes = document.getElementById('confirmYes');
+        const confirmNo = document.getElementById('confirmNo');
+        
+        exitButton.addEventListener('click', e => {
+          e.preventDefault();
+          exitConfirmModal.style.display = 'block';
+        });
+        
+        confirmYes.addEventListener('click', () => {
+          window.location.href = "https://www.lanteacorp.com";
+        });
+        confirmYes.addEventListener('touchend', () => {
+          window.location.href = "https://www.lanteacorp.com";
+        });
+        
+        confirmNo.addEventListener('click', () => {
+          exitConfirmModal.style.display = 'none';
+        });
+        confirmNo.addEventListener('touchend', () => {
+          exitConfirmModal.style.display = 'none';
+        });
+        
+        // Action buttons for game actions.
+        const buttonA = document.getElementById('buttonA');
+        const buttonB = document.getElementById('buttonB');
+        
+        buttonA.addEventListener('touchstart', e => {
+          e.preventDefault();
+          console.log("Button A pressed");
+          simulateKeyDown(13);
+        });
+        buttonA.addEventListener('touchend', e => {
+          e.preventDefault();
+          console.log("Button A released");
+          simulateKeyUp(13);
+        });
+        
+        buttonB.addEventListener('touchstart', e => {
+          e.preventDefault();
+          console.log("Button B pressed");
+          simulateKeyDown(27);
+        });
+        buttonB.addEventListener('touchend', e => {
+          e.preventDefault();
+          console.log("Button B released");
+          simulateKeyUp(27);
+        });
+        
+        // Desktop click events.
+        buttonA.addEventListener('click', e => {
+          e.preventDefault();
+          console.log("Button A clicked");
+          simulateKeyDown(13);
+          setTimeout(() => simulateKeyUp(13), 100);
+        });
+        buttonB.addEventListener('click', e => {
+          e.preventDefault();
+          console.log("Button B clicked");
+          simulateKeyDown(27);
+          setTimeout(() => simulateKeyUp(27), 100);
+        });
+      });
+    </script>
+  </body>
+</html>
