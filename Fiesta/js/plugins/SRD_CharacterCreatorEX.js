@@ -2105,21 +2105,10 @@ Window_CharacterCreator_FolderList.prototype.currentName = function() {
 };
 
 Window_CharacterCreator_FolderList.prototype.currentFolder = function() {
-    console.log("DEBUG: Checking currentFolder...");
-    console.log("DEBUG: this._list =", this._list);
-    console.log("DEBUG: this.index() =", this.index());
-    
-    if (!this._list[this.index()]) {
-        console.error("ERROR: this._list[this.index()] is undefined!");
-        return null; // Prevents crash
-    }
-    
-    console.log("DEBUG: this._list[this.index()].name =", this._list[this.index()].name);
-
-    if(this._combines[this._list[this.index()].name]) {
-        return this._combines[this._list[this.index()].name][0];
-    }
-    return this._list[this.index()].name;
+	if(this._combines[this._list[this.index()].name]) {
+		return this._combines[this._list[this.index()].name][0];
+	}
+	return this._list[this.index()].name;
 };
 
 Window_CharacterCreator_FolderList.prototype.combines = function() {
@@ -2128,7 +2117,6 @@ Window_CharacterCreator_FolderList.prototype.combines = function() {
 
 Window_CharacterCreator_FolderList.prototype.makeCommandList = function() {
 	const images = _.getFolderList();
-	console.log("DEBUG: Folders found by getFolderList:", images);
 	for(let i = 0; i < images.length; i++) {
 		if(images[i]) {
 			const fold = images[i];
