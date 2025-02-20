@@ -8,12 +8,12 @@ Imported.VisuMZ_2_BrightEffects = true;
 
 var VisuMZ = VisuMZ || {};
 VisuMZ.BrightEffects = VisuMZ.BrightEffects || {};
-VisuMZ.BrightEffects.version = 1.02;
+VisuMZ.BrightEffects.version = 1.10;
 
 //=============================================================================
  /*:
  * @target MZ
- * @plugindesc [RPG Maker MZ] [Tier 2] [Version 1.02] [BrightEffects]
+ * @plugindesc [RPG Maker MZ] [Tier 2] [Version 1.10] [BrightEffects]
  * @author VisuStella
  * @url http://www.yanfly.moe/wiki/Bright_Effects_VisuStella_MZ
  * @orderAfter VisuMZ_0_CoreEngine
@@ -37,6 +37,8 @@ VisuMZ.BrightEffects.version = 1.02;
  *   above.
  * * The Color Adjustment filter allows you to alter the brightness, contrast,
  *   and saturation levels of your maps and battles.
+ * * The Tilt Shift filter creates a blur at the top and bottom sections of the
+ *   screen to give a sense of proximity blurring.
  * * Plugin Commands that allow you to adjust these settings on the go.
  * * Notetags for maps to alter the Bloom, Godray, and Color Adjustments
  *
@@ -96,6 +98,20 @@ VisuMZ.BrightEffects.version = 1.02;
  * Threshold: Defines how bright a color needs to be to affect bloom.
  *
  * ---
+ * 
+ * Blur
+ * 
+ * The blur filter makes the screen appear less focused and more fuzzy. Details
+ * become harder to distinguish and the like.
+ * 
+ * Properties:
+ * 
+ * Blur: Adjusts the blur strength. For best results, use numbers between 0 and
+ * 5 where 0 is no blur and higher numbers mean higher blur strength. There are
+ * no default Plugin Parameter settings for the Blur strength as it will
+ * automatically default to 0 for best results.
+ * 
+ * ---
  *
  * Godray
  * 
@@ -134,6 +150,21 @@ VisuMZ.BrightEffects.version = 1.02;
  * Saturate: Adjusts the intensity of color on the screen. User higher numbers
  * to make colors more intense and lower numbers to make it less.
  *
+ * ---
+ * 
+ * Tilt Shift
+ * 
+ * The Tilt Shift filter creates a blur at the upper and lower edges of the
+ * screen with varying degrees of pixelation blur and gradient blur.
+ * 
+ * Properties:
+ * 
+ * Pixel Blur: What is the default pixel blur amount for tilt shift? Smaller
+ * values mean less blur. Higher values mean more blur.
+ * 
+ * Gradient Blur: What is the default gradient blur amount for tilt shift?
+ * Smaller values mean less gradient. Higher values mean more gradient.
+ * 
  * ---
  *
  * ============================================================================
@@ -232,6 +263,20 @@ VisuMZ.BrightEffects.version = 1.02;
  *   - Lower - Less picky
  *   - Higher - More picky
  *
+ * ---
+ * 
+ * === Blur-Related Notetags ===
+ * 
+ * ---
+ * 
+ * <Blur: x>
+ * 
+ * - Used for: Map Notetags and Troop Names
+ * - Changes the blur strength used for the screen to 'x'.
+ * - Replace 'x' with a number representing the blur strength. For best
+ *   results, use numbers between 0 and 5 where 0 is no blur and higher numbers
+ *   mean higher blur strength.
+ * 
  * ---
  * 
  * === Godray-Related Notetags ===
@@ -406,6 +451,30 @@ VisuMZ.BrightEffects.version = 1.02;
  *   - Higher - More intensity
  *
  * ---
+ * 
+ * === Tilt Shift Notetags ===
+ * 
+ * ---
+ * 
+ * <Tilt Shift Pixel Blur: x>
+ * 
+ * - Used for: Map Notetags and Troop Names
+ * - Adjusts the tilt shift filter's pixel blur amount for the map/battle.
+ * - Replace 'x' with a number to represent the blur intensity.
+ *   - Lower = less blur
+ *   - Higher = more blur
+ * 
+ * ---
+ * 
+ * <Tilt Shift Gradient Blur: x>
+ * 
+ * - Used for: Map Notetags and Troop Names
+ * - Adjusts the tilt shift filter's gradient blur amount for the map/battle.
+ * - Replace 'x' with a number to represent the gradient blur distance.
+ *   - Lower = less gradient
+ *   - Higher = more gradient
+ * 
+ * ---
  *
  * ============================================================================
  * Plugin Commands
@@ -444,6 +513,31 @@ VisuMZ.BrightEffects.version = 1.02;
  *   Shift Duration:
  *   - The amount of time it takes for the reset to occur.
  *
+ * ---
+ * 
+ * === Blur Plugin Commands ===
+ * 
+ * ---
+ * 
+ * Blur: Change Settings
+ * - Change the Blur filter settings for the screen.
+ * 
+ *   Blur Strength:
+ *   - Change blur strength for the screen.
+ *   - For best results, use numbers between 0 and 5  where 0 is no blur and
+ *     higher numbers mean higher blur strength.
+ * 
+ *   Blur Duration:
+ *   - The amount of time it takes for the change to occur.
+ * 
+ * ---
+ * 
+ * Blur: Reset
+ * - Clears the Blur filter.
+ * 
+ *   Blur Duration:
+ *   - The amount of time it takes for the reset to occur.
+ * 
  * ---
  * 
  * === Godray Plugin Commands ===
@@ -513,6 +607,51 @@ VisuMZ.BrightEffects.version = 1.02;
  *   Shift Duration:
  *   - The amount of time it takes for the reset to occur.
  *
+ * ---
+ * 
+ * === Tilt Shift Plugin Commands ===
+ * 
+ * ---
+ * 
+ * Tilt Shift: Change Settings
+ * - Change the Tilt Shift filter settings for the screen.
+ * 
+ *   Pixel Blur:
+ *   - What is the default pixel blur amount for tilt shift?
+ *   - Smaller = less blur. Higher = more blur.
+ * 
+ *   Gradient Blur:
+ *   - What is the default gradient blur amount for tilt shift?
+ *   - Smaller = less gradient. Higher = more gradient.
+ * 
+ *   Shift Duration:
+ *   - The amount of time it takes for the change to occur.
+ * 
+ * ---
+ * 
+ * Tilt Shift: Reset
+ * - Reset the Tilt Shift filter settings for the settings found in the
+ *   Plugin Parameters or map notetags.
+ * 
+ *   Shift Duration:
+ *   - The amount of time it takes for the change to occur.
+ * 
+ * ---
+ * 
+ * ============================================================================
+ * Plugin Parameters: General Settings
+ * ============================================================================
+ * 
+ * This section is for the general plugin parameter settings.
+ * 
+ * ---
+ * 
+ * General
+ * 
+ *   Apply Base-Only?
+ *   - Base-Only excludes pictures, timers, and weather.
+ *   - Whole includes the above.
+ * 
  * ---
  *
  * ============================================================================
@@ -600,6 +739,30 @@ VisuMZ.BrightEffects.version = 1.02;
  * ---
  *
  * ============================================================================
+ * Plugin Parameters: Tilt Shift Settings
+ * ============================================================================
+ *
+ * There are two versions of these plugin parameters. One of them are for the
+ * Map Defaults and the other is for the Battle Defaults. These settings are
+ * applied to the map and battle scenes respectively and will serve as the
+ * stock setting when no map notetags, troop name tags, or Plugin Commands have
+ * been used to alter them.
+ *
+ * ---
+ *
+ * Tilt Shift Settings
+ * 
+ *   Pixel Blur:
+ *   - What is the default pixel blur amount for tilt shift?
+ *   - Smaller = less blur. Higher = more blur.
+ * 
+ *   Gradient Blur:
+ *   - What is the default gradient blur amount for tilt shift?
+ *   - Smaller = less gradient. Higher = more gradient.
+ *
+ * ---
+ *
+ * ============================================================================
  * Terms of Use
  * ============================================================================
  *
@@ -665,6 +828,62 @@ VisuMZ.BrightEffects.version = 1.02;
  * Changelog
  * ============================================================================
  * 
+ * Version 1.10: January 16, 2025
+ * * Bug Fixes!
+ * ** Fixed bug with Tilt Shift effect not applying correctly when exiting a
+ *    menu upon reentering the map scene. Fix made by Olivia.
+ * 
+ * Version 1.09: October 17, 2024
+ * * Optimization Update!
+ * ** Plugin should run more optimized.
+ * 
+ * Version 1.08: June 13, 2024
+ * * Bug Fixes!
+ * ** Added a failsafe to prevent crashes when no focus target is found due to
+ *    either changing map or a sprite is deleted. Fix made by Olivia.
+ * 
+ * Version 1.07: March 16, 2023
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New features added by Olivia and sponsored by Archeia:
+ * *** Blur
+ * **** The blur filter makes the screen appear less focused and more fuzzy.
+ *      Details become harder to distinguish and the like.
+ * **** Notetags and Plugin Commands added.
+ * * Optimization Update!
+ * ** Plugin should run more optimized.
+ * 
+ * Version 1.06: October 13, 2022
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New features added by Olivia and sponsored by Archeia:
+ * *** Tilt Shift
+ * **** The Tilt Shift filter creates a blur at the upper and lower edges of
+ *      the screen with varying degrees of pixelation blur and gradient blur.
+ * **** Plugin Parameters, Notetags, and Plugin Commands added.
+ * * Optimization Update!
+ * ** Plugin should run more optimized.
+ * 
+ * Version 1.05: April 28, 2022
+ * * Bug Fixes!
+ * ** No longer crashes with event test play. Fix made by Olivia.
+ * 
+ * Version 1.04: March 24, 2022
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features:
+ * ** New Plugin Parameters added: "Apply Base-Only?"
+ * *** Base-Only excludes pictures, timers, and weather.
+ * *** Whole includes the above.
+ * 
+ * Version 1.03: April 2, 2021
+ * * Bug Fixes!
+ * ** Changing scenes while a filter change is in transition will automatically
+ *    load up the changes made to the filter to prevent desynchronization.
+ *    Fix made by Olivia.
+ * 
  * Version 1.02: March 12, 2021
  * * Compatibility Update!
  * ** Added compatibility with the VisuStella MZ Options Core v1.10 update.
@@ -684,6 +903,12 @@ VisuMZ.BrightEffects.version = 1.02;
  * ============================================================================
  * End of Helpfile
  * ============================================================================
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_Begin
+ * @text -
+ * @desc -
  *
  * @ --------------------------------------------------------------------------
  *
@@ -724,6 +949,48 @@ VisuMZ.BrightEffects.version = 1.02;
  * @type number
  * @desc The amount of time it takes for the reset to occur.
  * @default 60
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_Blur
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command BlurChange
+ * @text Blur: Change Settings
+ * @desc Change the Blur filter settings for the screen.
+ *
+ * @arg Blur:num
+ * @text Blur Strength
+ * @desc Change blur strength for the screen.
+ * For best results, use numbers between 0 and 5.
+ * @default 2.0
+ *
+ * @arg Duration:num
+ * @text Blur Duration
+ * @type number
+ * @desc The amount of time it takes for the change to occur.
+ * @default 60
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command BlurReset
+ * @text Blur: Reset
+ * @desc Clears the Blur filter.
+ *
+ * @arg Duration:num
+ * @text Blur Duration
+ * @type number
+ * @desc The amount of time it takes for the reset to occur.
+ * @default 60
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_Godray
+ * @text -
+ * @desc -
  *
  * @ --------------------------------------------------------------------------
  *
@@ -783,6 +1050,12 @@ VisuMZ.BrightEffects.version = 1.02;
  *
  * @ --------------------------------------------------------------------------
  *
+ * @command Separator_ColorAdjust
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
  * @command ColorAdjustChange
  * @text Color Adjust: Change Settings
  * @desc Change the Color Adjustment filter settings for the screen.
@@ -823,6 +1096,55 @@ VisuMZ.BrightEffects.version = 1.02;
  *
  * @ --------------------------------------------------------------------------
  *
+ * @command Separator_TiltShift
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command TiltShiftChange
+ * @text Tilt Shift: Change Settings
+ * @desc Change the Tilt Shift filter settings for the screen.
+ *
+ * @arg Blur:num
+ * @text Pixel Blur
+ * @desc What is the default pixel blur amount for tilt shift?
+ * Smaller = less blur. Higher = more blur.
+ * @default 24
+ *
+ * @arg GradientBlur:num
+ * @text Gradient Blur
+ * @desc What is the default gradient blur amount for tilt shift?
+ * Smaller = less gradient. Higher = more gradient.
+ * @default 1000
+ *
+ * @arg Duration:num
+ * @text Shift Duration
+ * @type number
+ * @desc The amount of time it takes for the change to occur.
+ * @default 60
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command TiltShiftReset
+ * @text Tilt Shift: Reset
+ * @desc Reset the Tilt Shift filter settings for the settings
+ * found in the Plugin Parameters or map notetags.
+ *
+ * @arg Duration:num
+ * @text Shift Duration
+ * @type number
+ * @desc The amount of time it takes for the reset to occur.
+ * @default 60
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_End
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
  * @ ==========================================================================
  * @ Plugin Parameters
  * @ ==========================================================================
@@ -844,6 +1166,16 @@ VisuMZ.BrightEffects.version = 1.02;
  * @param Map
  * @text Map Defaults
  *
+ * @param MapBaseFilter:eval
+ * @text Apply Base-Only?
+ * @parent Map
+ * @type boolean
+ * @on Base-Only
+ * @off Apply Whole
+ * @desc Base-Only excludes pictures, timers, and weather.
+ * Whole includes the above.
+ * @default true
+ *
  * @param MapBloom:struct
  * @text Bloom Settings
  * @parent Map
@@ -864,9 +1196,26 @@ VisuMZ.BrightEffects.version = 1.02;
  * @type struct<ColorAdjust>
  * @desc Default color adjustment settings for all maps.
  * @default {"Brightness:num":"1.0","Contrast:num":"0.0","Saturate:num":"0.0"}
+ *
+ * @param MapTiltShift:struct
+ * @text Tilt Shift Settings
+ * @parent Map
+ * @type struct<TiltShift>
+ * @desc Default tilt shift adjustment settings for all maps.
+ * @default {"Blur:num":"24","GradientBlur:num":"1000"}
  * 
  * @param Battle
  * @text Battle Defaults
+ *
+ * @param BattleBaseFilter:eval
+ * @text Apply Base-Only?
+ * @parent Battle
+ * @type boolean
+ * @on Base-Only
+ * @off Apply Whole
+ * @desc Base-Only excludes pictures, timers, and weather.
+ * Whole includes the above.
+ * @default true
  *
  * @param BattleBloom:struct
  * @text Bloom Settings
@@ -888,6 +1237,13 @@ VisuMZ.BrightEffects.version = 1.02;
  * @type struct<ColorAdjust>
  * @desc Default color adjustment settings for all battles.
  * @default {"Brightness:num":"1.0","Contrast:num":"0.0","Saturate:num":"0.0"}
+ *
+ * @param BattleTiltShift:struct
+ * @text Tilt Shift Settings
+ * @parent Battle
+ * @type struct<TiltShift>
+ * @desc Default tilt shift adjustment settings for all battles.
+ * @default {"Blur:num":"0","GradientBlur:num":"1600"}
  *
  * @param BreakEnd1
  * @text --------------------------
@@ -980,6 +1336,25 @@ VisuMZ.BrightEffects.version = 1.02;
  * @default 0.0
  *
  */
+/* ----------------------------------------------------------------------------
+ * Tilt Shift Settings
+ * ----------------------------------------------------------------------------
+ */
+/*~struct~TiltShift:
+ *
+ * @param Blur:num
+ * @text Pixel Blur
+ * @desc What is the default pixel blur amount for tilt shift?
+ * Smaller = less blur. Higher = more blur.
+ * @default 24
+ *
+ * @param GradientBlur:num
+ * @text Gradient Blur
+ * @desc What is the default gradient blur amount for tilt shift?
+ * Smaller = less gradient. Higher = more gradient.
+ * @default 1000
+ *
+ */
 //=============================================================================
 
-var _0x2892=['contrast','_realY','registerCommand','BrightEffects','_brightEffectsColorAdjustHorzBrightness','start','Spriteset_Base_update','BattleGodray','setBrightEffectsGodraySettings','_brightEffectsColorAdjustVertContrast','17671mAKScS','_brightEffectsGodrayHorzLacunarity','description','%1\x27s\x20version\x20does\x20not\x20match\x20plugin\x27s.\x20Please\x20update\x20it\x20in\x20the\x20Plugin\x20Manager.','updateBrightEffectsAdvBloomFilter','prototype','lacunarity','_brightEffectsGodrayVertSpeed','updateMapBrightEffectsColorAdjust','setupBrightEffectsGodrayFilter','_brightEffectsBloomHorzThreshold','Angle','threshold','Brightness','includes','ColorAdjustChange','_BrightEffectsAdvBloomFilter','ConvertParams','height','createBrightEffectsFilters','map','isSceneBattle','constructor','createBrightEffectsColorAdjustFilter','currentBrightness','_brightEffectsGodrayVertGain','max','_brightEffectsBloomVertScale','_BrightEffectsColorAdjustFilter','41ZpoGXS','Contrast','_brightEffectsBloomHorzBrightness','exit','createBrightEffectsAdvBloomFilter','_realX','Game_Player_update','_brightEffectsBloomVertThreshold','Scale','MapBloom','updateMapBrightEffectsGodray','version','STRUCT','_BrightEffectsColorAdjustSettingsBattle','Lacunarity','setBrightEffectsColorAdjustSettings','getBrightEffectsColorAdjustSettings','enabled','Game_Map_setup','specialEffects','createOverallFilters','speed','MapColorAdjust','1139SzgxFn','_BrightEffectsAdvBloomSettingsBattle','_BrightEffectsGodraySettingsBattle','_BrightEffectsColorAdjustSettingsMap','updateMapBrightEffectsAdvBloom','ARRAYFUNC','troop','Gain','parameters','getBrightEffectsAdvBloomSettings','setBrightEffectsAdvBloomSettings','parse','updateBrightEffectsFilters','Settings','_brightEffectsBloomVertBrightness','setup','bloomScale','note','BloomChange','angle','BattleBloom','_brightEffectsGodrayVertAngle','1CIjsVH','_brightEffectsColorAdjustVertSaturate','_BrightEffectsGodraySettingsMap','setupBrightEffectsAdvBloomFilter','NUM','gain','updateBrightEffectsGodrayFilter','143426UJYxaB','Visible','currentContrast','updateMapBrightEffects','GodrayReset','Saturate','width','ARRAYJSON','Game_CharacterBase_locate','BattleColorAdjust','631YFNTGE','saturate','ColorAdjustReset','_brightEffectsGodrayVertLacunarity','%1\x20is\x20missing\x20a\x20required\x20plugin.\x0aPlease\x20install\x20%2\x20into\x20the\x20Plugin\x20Manager.','createBrightEffectsGodrayFilter','ARRAYSTRUCT','match','ARRAYNUM','_brightEffectsColorAdjustHorzContrast','_brightEffectsGodrayHorzAngle','_brightEffectsGodrayHorzGain','STR','BloomReset','GodrayFilter','Spriteset_Base_createOverallFilters','MapGodray','visible','status','_brightEffectsBloomHorzScale','_BrightEffectsGodrayFilter','632yEyjDA','1171187VTBZOm','format','2908757ZRUWeX','_scene','call','733zHOVaX','getBrightEffectsGodraySettings','Threshold','update','%1\x20is\x20incorrectly\x20placed\x20on\x20the\x20plugin\x20list.\x0aIt\x20is\x20a\x20Tier\x20%2\x20plugin\x20placed\x20over\x20other\x20Tier\x20%3\x20plugins.\x0aPlease\x20reorder\x20the\x20plugin\x20list\x20from\x20smallest\x20to\x20largest\x20tier\x20numbers.','updateBrightEffectsColorAdjustFilter','Scene_Battle_start','brightness','_brightEffectsColorAdjustVertBrightness','setupBrightEffectsColorAdjustFilter','setupBrightEffectsFilters','_brightEffectsColorAdjustHorzSaturate','locate','currentSaturate','AdvancedBloomFilter','push','Speed','filters','JSON','duration','Duration','733357kSlTrj','name','_brightEffectsGodrayHorzSpeed','GodrayChange'];var _0x5b86=function(_0x536b18,_0xcbe310){_0x536b18=_0x536b18-0x14f;var _0x289273=_0x2892[_0x536b18];return _0x289273;};var _0x2649d9=_0x5b86;(function(_0x414e5c,_0x56d56c){var _0x577c08=_0x5b86;while(!![]){try{var _0x29d913=parseInt(_0x577c08(0x162))*-parseInt(_0x577c08(0x1a3))+parseInt(_0x577c08(0x188))*-parseInt(_0x577c08(0x18e))+parseInt(_0x577c08(0x169))+parseInt(_0x577c08(0x1b1))*parseInt(_0x577c08(0x1ce))+-parseInt(_0x577c08(0x173))*parseInt(_0x577c08(0x1e5))+-parseInt(_0x577c08(0x189))+parseInt(_0x577c08(0x18b));if(_0x29d913===_0x56d56c)break;else _0x414e5c['push'](_0x414e5c['shift']());}catch(_0x1a5098){_0x414e5c['push'](_0x414e5c['shift']());}}}(_0x2892,0xa8809));var label=_0x2649d9(0x1aa),tier=tier||0x0,dependencies=[],pluginData=$plugins['filter'](function(_0x1c6bfc){var _0x101bc2=_0x2649d9;return _0x1c6bfc[_0x101bc2(0x185)]&&_0x1c6bfc['description'][_0x101bc2(0x1bf)]('['+label+']');})[0x0];VisuMZ[label][_0x2649d9(0x159)]=VisuMZ[label][_0x2649d9(0x159)]||{},VisuMZ[_0x2649d9(0x1c2)]=function(_0x18a57d,_0x209c38){var _0x1b92eb=_0x2649d9;for(const _0xecc6cf in _0x209c38){if(_0xecc6cf[_0x1b92eb(0x17a)](/(.*):(.*)/i)){const _0x5e8121=String(RegExp['$1']),_0x4cb319=String(RegExp['$2'])['toUpperCase']()['trim']();let _0x5416a0,_0x9ba575,_0x193db0;switch(_0x4cb319){case _0x1b92eb(0x166):_0x5416a0=_0x209c38[_0xecc6cf]!==''?Number(_0x209c38[_0xecc6cf]):0x0;break;case _0x1b92eb(0x17b):_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575['map'](_0x326433=>Number(_0x326433));break;case'EVAL':_0x5416a0=_0x209c38[_0xecc6cf]!==''?eval(_0x209c38[_0xecc6cf]):null;break;case'ARRAYEVAL':_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575[_0x1b92eb(0x1c5)](_0x35ddca=>eval(_0x35ddca));break;case _0x1b92eb(0x1a0):_0x5416a0=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):'';break;case _0x1b92eb(0x170):_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575['map'](_0x28b870=>JSON['parse'](_0x28b870));break;case'FUNC':_0x5416a0=_0x209c38[_0xecc6cf]!==''?new Function(JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf])):new Function('return\x200');break;case _0x1b92eb(0x151):_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575[_0x1b92eb(0x1c5)](_0x5d416b=>new Function(JSON[_0x1b92eb(0x157)](_0x5d416b)));break;case _0x1b92eb(0x17f):_0x5416a0=_0x209c38[_0xecc6cf]!==''?String(_0x209c38[_0xecc6cf]):'';break;case'ARRAYSTR':_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575['map'](_0x829f6f=>String(_0x829f6f));break;case _0x1b92eb(0x1da):_0x193db0=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):{},_0x5416a0=VisuMZ[_0x1b92eb(0x1c2)]({},_0x193db0);break;case _0x1b92eb(0x179):_0x9ba575=_0x209c38[_0xecc6cf]!==''?JSON[_0x1b92eb(0x157)](_0x209c38[_0xecc6cf]):[],_0x5416a0=_0x9ba575[_0x1b92eb(0x1c5)](_0xebc036=>VisuMZ['ConvertParams']({},JSON[_0x1b92eb(0x157)](_0xebc036)));break;default:continue;}_0x18a57d[_0x5e8121]=_0x5416a0;}}return _0x18a57d;},(_0x4a36b7=>{var _0x563f45=_0x2649d9;const _0x12ad78=_0x4a36b7['name'];for(const _0x34fe93 of dependencies){if(!Imported[_0x34fe93]){alert(_0x563f45(0x177)[_0x563f45(0x18a)](_0x12ad78,_0x34fe93)),SceneManager[_0x563f45(0x1d1)]();break;}}const _0x11d9be=_0x4a36b7[_0x563f45(0x1b3)];if(_0x11d9be['match'](/\[Version[ ](.*?)\]/i)){const _0xdeb50d=Number(RegExp['$1']);_0xdeb50d!==VisuMZ[label][_0x563f45(0x1d9)]&&(alert(_0x563f45(0x1b4)['format'](_0x12ad78,_0xdeb50d)),SceneManager[_0x563f45(0x1d1)]());}if(_0x11d9be[_0x563f45(0x17a)](/\[Tier[ ](\d+)\]/i)){const _0x37025f=Number(RegExp['$1']);_0x37025f<tier?(alert(_0x563f45(0x192)[_0x563f45(0x18a)](_0x12ad78,_0x37025f,tier)),SceneManager[_0x563f45(0x1d1)]()):tier=Math[_0x563f45(0x1cb)](_0x37025f,tier);}VisuMZ['ConvertParams'](VisuMZ[label][_0x563f45(0x159)],_0x4a36b7[_0x563f45(0x154)]);})(pluginData),PluginManager[_0x2649d9(0x1a9)](pluginData[_0x2649d9(0x1a4)],_0x2649d9(0x15e),_0x266a83=>{var _0x49881f=_0x2649d9;VisuMZ[_0x49881f(0x1c2)](_0x266a83,_0x266a83);const _0x29cf0e=$gameScreen[_0x49881f(0x155)]();_0x29cf0e[_0x49881f(0x15c)]=_0x266a83[_0x49881f(0x1d6)],_0x29cf0e[_0x49881f(0x195)]=_0x266a83['Brightness'],_0x29cf0e[_0x49881f(0x1bd)]=_0x266a83[_0x49881f(0x190)],_0x29cf0e[_0x49881f(0x1a1)]=_0x266a83[_0x49881f(0x1a2)],!SceneManager[_0x49881f(0x1c6)]()&&($gameMap[_0x49881f(0x1d0)]=undefined,$gameMap['_brightEffectsBloomVertBrightness']=undefined);}),PluginManager[_0x2649d9(0x1a9)](pluginData[_0x2649d9(0x1a4)],_0x2649d9(0x180),_0x1013dc=>{var _0x51da89=_0x2649d9;VisuMZ[_0x51da89(0x1c2)](_0x1013dc,_0x1013dc);SceneManager[_0x51da89(0x1c6)]()?$gameTroop['setupBrightEffectsAdvBloomFilter']():$gameMap['setupBrightEffectsAdvBloomFilter']();const _0x2d03ad=$gameScreen[_0x51da89(0x155)]();_0x2d03ad[_0x51da89(0x1a1)]=_0x1013dc[_0x51da89(0x1a2)];}),PluginManager[_0x2649d9(0x1a9)](pluginData[_0x2649d9(0x1a4)],_0x2649d9(0x1a6),_0x42d89d=>{var _0xd4c686=_0x2649d9;VisuMZ[_0xd4c686(0x1c2)](_0x42d89d,_0x42d89d);const _0x8d3cbc=$gameScreen[_0xd4c686(0x18f)]();_0x8d3cbc[_0xd4c686(0x184)]=_0x42d89d[_0xd4c686(0x16a)],_0x8d3cbc[_0xd4c686(0x1e3)]=_0x42d89d[_0xd4c686(0x19e)],_0x8d3cbc[_0xd4c686(0x167)]=_0x42d89d[_0xd4c686(0x153)],_0x8d3cbc[_0xd4c686(0x1b7)]=_0x42d89d[_0xd4c686(0x1dc)],_0x8d3cbc[_0xd4c686(0x15f)]=_0x42d89d[_0xd4c686(0x1bc)],_0x8d3cbc[_0xd4c686(0x1a1)]=_0x42d89d['Duration'],!SceneManager[_0xd4c686(0x1c6)]()&&($gameMap['_brightEffectsGodrayHorzSpeed']=undefined,$gameMap[_0xd4c686(0x1b8)]=undefined);}),PluginManager[_0x2649d9(0x1a9)](pluginData['name'],_0x2649d9(0x16d),_0x418a05=>{var _0x33728f=_0x2649d9;VisuMZ['ConvertParams'](_0x418a05,_0x418a05);SceneManager[_0x33728f(0x1c6)]()?$gameTroop[_0x33728f(0x1ba)]():$gameMap[_0x33728f(0x1ba)]();const _0x5d9168=$gameScreen[_0x33728f(0x18f)]();_0x5d9168[_0x33728f(0x1a1)]=_0x418a05['Duration'];}),PluginManager['registerCommand'](pluginData['name'],_0x2649d9(0x1c0),_0x581a56=>{var _0x569a90=_0x2649d9;VisuMZ[_0x569a90(0x1c2)](_0x581a56,_0x581a56);const _0x46d073=$gameScreen[_0x569a90(0x1de)]();_0x46d073[_0x569a90(0x195)]=_0x581a56['Brightness'],_0x46d073[_0x569a90(0x1a7)]=_0x581a56[_0x569a90(0x1cf)],_0x46d073[_0x569a90(0x174)]=_0x581a56['Saturate'],_0x46d073[_0x569a90(0x1a1)]=_0x581a56['Duration'],!SceneManager['isSceneBattle']()&&($gameMap[_0x569a90(0x199)]=undefined,$gameMap['_brightEffectsColorAdjustVertSaturate']=undefined);}),PluginManager[_0x2649d9(0x1a9)](pluginData[_0x2649d9(0x1a4)],_0x2649d9(0x175),_0x4c08f1=>{var _0x192376=_0x2649d9;VisuMZ[_0x192376(0x1c2)](_0x4c08f1,_0x4c08f1);SceneManager[_0x192376(0x1c6)]()?$gameTroop[_0x192376(0x197)]():$gameMap[_0x192376(0x197)]();const _0x463d74=$gameScreen[_0x192376(0x1de)]();_0x463d74['duration']=_0x4c08f1[_0x192376(0x1a2)];}),SceneManager[_0x2649d9(0x1c6)]=function(){var _0xc0e2b6=_0x2649d9;return this['_scene']&&this[_0xc0e2b6(0x18c)]['constructor']===Scene_Battle;},SceneManager['isSceneMap']=function(){var _0xd4242f=_0x2649d9;return this[_0xd4242f(0x18c)]&&this[_0xd4242f(0x18c)][_0xd4242f(0x1c7)]===Scene_Map;},Game_Screen[_0x2649d9(0x1b6)][_0x2649d9(0x156)]=function(_0x4c6ad,_0x53c13d,_0x5f16a4,_0x16a6a8){var _0x4fde48=_0x2649d9;SceneManager[_0x4fde48(0x1c6)]()?this['_BrightEffectsAdvBloomSettingsBattle']={'bloomScale':_0x4c6ad,'brightness':_0x53c13d,'threshold':_0x5f16a4,'duration':_0x16a6a8||0x0}:this['_BrightEffectsAdvBloomSettingsMap']={'bloomScale':_0x4c6ad,'brightness':_0x53c13d,'threshold':_0x5f16a4,'duration':_0x16a6a8||0x0};},Game_Screen[_0x2649d9(0x1b6)][_0x2649d9(0x1af)]=function(_0x4bcb04,_0x1a071e,_0x3360e2,_0x3f7c2e,_0x4ce455,_0x44fc68){var _0x597cf9=_0x2649d9;SceneManager['isSceneBattle']()?this['_BrightEffectsGodraySettingsBattle']={'visible':_0x4bcb04,'speed':_0x1a071e,'gain':_0x3360e2,'lacunarity':_0x3f7c2e,'angle':_0x4ce455,'duration':_0x44fc68||0x0}:this[_0x597cf9(0x164)]={'visible':_0x4bcb04,'speed':_0x1a071e,'gain':_0x3360e2,'lacunarity':_0x3f7c2e,'angle':_0x4ce455,'duration':_0x44fc68||0x0};},Game_Screen['prototype'][_0x2649d9(0x1dd)]=function(_0x3d8d51,_0x220946,_0x34e8fa,_0x172a3c){var _0x56d9c4=_0x2649d9;SceneManager[_0x56d9c4(0x1c6)]()?this['_BrightEffectsColorAdjustSettingsBattle']={'brightness':_0x3d8d51,'contrast':_0x220946,'saturate':_0x34e8fa,'duration':_0x172a3c||0x0}:this['_BrightEffectsColorAdjustSettingsMap']={'brightness':_0x3d8d51,'contrast':_0x220946,'saturate':_0x34e8fa,'duration':_0x172a3c||0x0};},Game_Screen['prototype'][_0x2649d9(0x155)]=function(){var _0x156c6c=_0x2649d9;return SceneManager[_0x156c6c(0x1c6)]()?(this[_0x156c6c(0x1e6)]===undefined&&$gameTroop[_0x156c6c(0x165)](),this[_0x156c6c(0x1e6)]):(this['_BrightEffectsAdvBloomSettingsMap']===undefined&&$gameMap[_0x156c6c(0x165)](),this['_BrightEffectsAdvBloomSettingsMap']);},Game_Screen[_0x2649d9(0x1b6)][_0x2649d9(0x18f)]=function(){var _0x4cd7f2=_0x2649d9;return SceneManager['isSceneBattle']()?(this[_0x4cd7f2(0x1e7)]===undefined&&$gameTroop[_0x4cd7f2(0x1ba)](),this['_BrightEffectsGodraySettingsBattle']):(this[_0x4cd7f2(0x164)]===undefined&&$gameMap['setupBrightEffectsGodrayFilter'](),this['_BrightEffectsGodraySettingsMap']);},Game_Screen['prototype'][_0x2649d9(0x1de)]=function(){var _0x548b38=_0x2649d9;return SceneManager['isSceneBattle']()?(this[_0x548b38(0x1db)]===undefined&&$gameTroop[_0x548b38(0x197)](),this[_0x548b38(0x1db)]):(this[_0x548b38(0x14f)]===undefined&&$gameMap[_0x548b38(0x197)](),this[_0x548b38(0x14f)]);},VisuMZ[_0x2649d9(0x1aa)][_0x2649d9(0x194)]=Scene_Battle[_0x2649d9(0x1b6)][_0x2649d9(0x1ac)],Scene_Battle[_0x2649d9(0x1b6)]['start']=function(){var _0xa54d5d=_0x2649d9;VisuMZ[_0xa54d5d(0x1aa)][_0xa54d5d(0x194)][_0xa54d5d(0x18d)](this),$gameTroop['setupBrightEffectsFilters']();},Game_Troop[_0x2649d9(0x1b6)][_0x2649d9(0x198)]=function(){var _0x4af45e=_0x2649d9;this[_0x4af45e(0x165)](),this['setupBrightEffectsGodrayFilter'](),this[_0x4af45e(0x197)]();},Game_Troop[_0x2649d9(0x1b6)][_0x2649d9(0x165)]=function(){var _0x5e345a=_0x2649d9;const _0x20cad3=VisuMZ[_0x5e345a(0x1aa)]['Settings'][_0x5e345a(0x160)];var _0x5c0d2d=_0x20cad3[_0x5e345a(0x1d6)],_0x167dbc=_0x20cad3[_0x5e345a(0x1be)],_0x3c085d=_0x20cad3[_0x5e345a(0x190)];if(!!this[_0x5e345a(0x152)]()){var _0x3a401e=this['troop']()[_0x5e345a(0x1a4)];if(_0x3a401e['match'](/<BLOOM SCALE: (.*)>/i))var _0x5c0d2d=Number(RegExp['$1'])||0x0;if(_0x3a401e[_0x5e345a(0x17a)](/<BLOOM BRIGHTNESS: (.*)>/i))var _0x167dbc=Number(RegExp['$1'])||0x0;if(_0x3a401e[_0x5e345a(0x17a)](/<BLOOM THRESHOLD: (.*)>/i))var _0x3c085d=Number(RegExp['$1'])||0x0;}$gameScreen[_0x5e345a(0x156)](_0x5c0d2d,_0x167dbc,_0x3c085d,0x0);},Game_Troop[_0x2649d9(0x1b6)][_0x2649d9(0x1ba)]=function(){var _0x20d4f7=_0x2649d9;const _0x2c7267=VisuMZ[_0x20d4f7(0x1aa)][_0x20d4f7(0x159)][_0x20d4f7(0x1ae)];var _0x26bd2c=_0x2c7267[_0x20d4f7(0x16a)],_0x4224e0=_0x2c7267['Speed'],_0xec1a4=_0x2c7267[_0x20d4f7(0x153)],_0x539299=_0x2c7267[_0x20d4f7(0x1dc)],_0x3af970=_0x2c7267['Angle'];if(!!this['troop']()){var _0x45a541=this['troop']()['name'];if(_0x45a541[_0x20d4f7(0x17a)](/<GODRAY>/i))_0x26bd2c=!![];else _0x45a541[_0x20d4f7(0x17a)](/<NO GODRAY>/i)&&(_0x26bd2c=![]);_0x45a541['match'](/<GODRAY SPEED: (.*)>/i)&&(_0x4224e0=Number(RegExp['$1'])||0x0),_0x45a541['match'](/<GODRAY GAIN: (.*)>/i)&&(_0xec1a4=Number(RegExp['$1'])||0x0),_0x45a541[_0x20d4f7(0x17a)](/<GODRAY LACUNARITY: (.*)>/i)&&(_0x539299=Number(RegExp['$1'])||0x0),_0x45a541[_0x20d4f7(0x17a)](/<GODRAY ANGLE: (.*)>/i)&&(_0x3af970=Number(RegExp['$1'])||0x0);}$gameScreen[_0x20d4f7(0x1af)](_0x26bd2c,_0x4224e0,_0xec1a4,_0x539299,_0x3af970,0x0);},Game_Troop[_0x2649d9(0x1b6)][_0x2649d9(0x197)]=function(){var _0x1e8f57=_0x2649d9;const _0xbc5e5c=VisuMZ['BrightEffects'][_0x1e8f57(0x159)][_0x1e8f57(0x172)];var _0x3b2f99=_0xbc5e5c[_0x1e8f57(0x1be)],_0x1479c1=_0xbc5e5c['Contrast'],_0x14ae08=_0xbc5e5c['Saturate'];if(!!this[_0x1e8f57(0x152)]()){var _0x13b7aa=this['troop']()[_0x1e8f57(0x1a4)];if(_0x13b7aa[_0x1e8f57(0x17a)](/<COLOR ADJUST BRIGHTNESS: (.*)>/i))var _0x3b2f99=Number(RegExp['$1'])||0x0;if(_0x13b7aa[_0x1e8f57(0x17a)](/<COLOR ADJUST CONTRAST: (.*)>/i))var _0x1479c1=Number(RegExp['$1'])||0x0;if(_0x13b7aa['match'](/<COLOR ADJUST SATURATE: (.*)>/i))var _0x14ae08=Number(RegExp['$1'])||0x0;}$gameScreen[_0x1e8f57(0x1dd)](_0x3b2f99,_0x1479c1,_0x14ae08,0x0);},VisuMZ[_0x2649d9(0x1aa)][_0x2649d9(0x1e0)]=Game_Map[_0x2649d9(0x1b6)][_0x2649d9(0x15b)],Game_Map[_0x2649d9(0x1b6)][_0x2649d9(0x15b)]=function(_0x27d93b){var _0x29dce6=_0x2649d9;VisuMZ[_0x29dce6(0x1aa)][_0x29dce6(0x1e0)][_0x29dce6(0x18d)](this,_0x27d93b),!!$dataMap&&this['setupBrightEffectsFilters']();},Game_Map[_0x2649d9(0x1b6)][_0x2649d9(0x198)]=function(){var _0x2049b0=_0x2649d9;if(ConfigManager[_0x2049b0(0x1e1)]===![])return;this[_0x2049b0(0x165)](),this[_0x2049b0(0x1ba)](),this['setupBrightEffectsColorAdjustFilter'](),$gamePlayer[_0x2049b0(0x16c)]();},Game_Map[_0x2649d9(0x1b6)][_0x2649d9(0x165)]=function(){var _0x4036a2=_0x2649d9;const _0x2bf3ab=VisuMZ[_0x4036a2(0x1aa)][_0x4036a2(0x159)][_0x4036a2(0x1d7)];var _0x1bd721=_0x2bf3ab[_0x4036a2(0x1d6)],_0x9eb5af=_0x2bf3ab[_0x4036a2(0x1be)],_0x2e1d09=_0x2bf3ab[_0x4036a2(0x190)];this['_brightEffectsBloomHorzScale']=undefined,this[_0x4036a2(0x1cc)]=undefined,this[_0x4036a2(0x1d0)]=undefined,this[_0x4036a2(0x15a)]=undefined,this[_0x4036a2(0x1bb)]=undefined,this[_0x4036a2(0x1d5)]=undefined;if($dataMap){var _0x30602b=$dataMap[_0x4036a2(0x15d)];if(_0x30602b['match'](/<BLOOM SCALE: (.*)>/i))var _0x1bd721=Number(RegExp['$1'])||0x0;if(_0x30602b[_0x4036a2(0x17a)](/<BLOOM BRIGHTNESS: (.*)>/i))var _0x9eb5af=Number(RegExp['$1'])||0x0;if(_0x30602b[_0x4036a2(0x17a)](/<BLOOM THRESHOLD: (.*)>/i))var _0x2e1d09=Number(RegExp['$1'])||0x0;_0x30602b[_0x4036a2(0x17a)](/<BLOOM (?:HORZ|HORIZONTAL) SCALE: (.*) TO (.*)>/i)&&(this[_0x4036a2(0x186)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this['_brightEffectsBloomVertScale']=undefined),_0x30602b[_0x4036a2(0x17a)](/<BLOOM (?:VERT|VERTICAL) SCALE: (.*) TO (.*)>/i)&&(this['_brightEffectsBloomHorzScale']=undefined,this[_0x4036a2(0x1cc)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x30602b['match'](/<BLOOM (?:HORZ|HORIZONTAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x4036a2(0x1d0)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4036a2(0x15a)]=undefined),_0x30602b['match'](/<BLOOM (?:VERT|VERTICAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x4036a2(0x1d0)]=undefined,this[_0x4036a2(0x15a)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x30602b[_0x4036a2(0x17a)](/<BLOOM (?:HORZ|HORIZONTAL) THRESHOLD: (.*) TO (.*)>/i)&&(this[_0x4036a2(0x1bb)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4036a2(0x1d5)]=undefined),_0x30602b['match'](/<BLOOM (?:VERT|VERTICAL) THRESHOLD: (.*) TO (.*)>/i)&&(this[_0x4036a2(0x1bb)]=undefined,this[_0x4036a2(0x1d5)]=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen[_0x4036a2(0x156)](_0x1bd721,_0x9eb5af,_0x2e1d09,0x0);},Game_Map['prototype'][_0x2649d9(0x1ba)]=function(){var _0x500ee2=_0x2649d9;const _0x208fb1=VisuMZ[_0x500ee2(0x1aa)][_0x500ee2(0x159)][_0x500ee2(0x183)];var _0x1233c1=_0x208fb1[_0x500ee2(0x16a)],_0x362f1c=_0x208fb1[_0x500ee2(0x19e)],_0x496bfe=_0x208fb1[_0x500ee2(0x153)],_0x32bc63=_0x208fb1['Lacunarity'],_0x42cb48=_0x208fb1[_0x500ee2(0x1bc)];this[_0x500ee2(0x1a5)]=undefined,this[_0x500ee2(0x1b8)]=undefined,this[_0x500ee2(0x17e)]=undefined,this[_0x500ee2(0x1ca)]=undefined,this[_0x500ee2(0x1b2)]=undefined,this[_0x500ee2(0x176)]=undefined,this[_0x500ee2(0x17d)]=undefined,this[_0x500ee2(0x161)]=undefined;if($dataMap){var _0x21fc87=$dataMap['note'];if(_0x21fc87[_0x500ee2(0x17a)](/<GODRAY>/i))_0x1233c1=!![];else _0x21fc87[_0x500ee2(0x17a)](/<NO GODRAY>/i)&&(_0x1233c1=![]);_0x21fc87[_0x500ee2(0x17a)](/<GODRAY SPEED: (.*)>/i)&&(_0x362f1c=Number(RegExp['$1'])||0x0),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY GAIN: (.*)>/i)&&(_0x496bfe=Number(RegExp['$1'])||0x0),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY LACUNARITY: (.*)>/i)&&(_0x32bc63=Number(RegExp['$1'])||0x0),_0x21fc87['match'](/<GODRAY ANGLE: (.*)>/i)&&(_0x42cb48=Number(RegExp['$1'])||0x0),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY (?:HORZ|HORIZONTAL) SPEED: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzSpeed']=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x500ee2(0x1b8)]=undefined),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY (?:VERT|VERTICAL) SPEED: (.*) TO (.*)>/i)&&(this[_0x500ee2(0x1a5)]=undefined,this[_0x500ee2(0x1b8)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY (?:HORZ|HORIZONTAL) GAIN: (.*) TO (.*)>/i)&&(this[_0x500ee2(0x17e)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this['_brightEffectsGodrayVertGain']=undefined),_0x21fc87['match'](/<GODRAY (?:VERT|VERTICAL) GAIN: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzGain']=undefined,this[_0x500ee2(0x1ca)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x21fc87['match'](/<GODRAY (?:HORZ|HORIZONTAL) LACUNARITY: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzLacunarity']=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x500ee2(0x176)]=undefined),_0x21fc87['match'](/<GODRAY (?:VERT|VERTICAL) LACUNARITY: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzLacunarity']=undefined,this[_0x500ee2(0x176)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY (?:HORZ|HORIZONTAL) ANGLE: (.*) TO (.*)>/i)&&(this[_0x500ee2(0x17d)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this['_brightEffectsGodrayVertAngle']=undefined),_0x21fc87[_0x500ee2(0x17a)](/<GODRAY (?:VERT|VERTICAL) ANGLE: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzAngle']=undefined,this[_0x500ee2(0x161)]=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen['setBrightEffectsGodraySettings'](_0x1233c1,_0x362f1c,_0x496bfe,_0x32bc63,_0x42cb48,0x0);},Game_Map[_0x2649d9(0x1b6)][_0x2649d9(0x197)]=function(){var _0x4ce369=_0x2649d9;const _0x264d02=VisuMZ[_0x4ce369(0x1aa)][_0x4ce369(0x159)][_0x4ce369(0x1e4)];var _0x39a0f0=_0x264d02[_0x4ce369(0x1be)],_0x229c55=_0x264d02[_0x4ce369(0x1cf)],_0x22289e=_0x264d02[_0x4ce369(0x16e)];this[_0x4ce369(0x1ab)]=undefined,this[_0x4ce369(0x196)]=undefined,this[_0x4ce369(0x17c)]=undefined,this['_brightEffectsColorAdjustVertContrast']=undefined,this[_0x4ce369(0x199)]=undefined,this[_0x4ce369(0x163)]=undefined;if($dataMap){var _0x5f45b6=$dataMap['note'];if(_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST BRIGHTNESS: (.*)>/i))var _0x39a0f0=Number(RegExp['$1'])||0x0;if(_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST CONTRAST: (.*)>/i))var _0x229c55=Number(RegExp['$1'])||0x0;if(_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST SATURATE: (.*)>/i))var _0x22289e=Number(RegExp['$1'])||0x0;_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST (?:HORZ|HORIZONTAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x4ce369(0x1ab)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4ce369(0x196)]=undefined),_0x5f45b6['match'](/<COLOR ADJUST (?:VERT|VERTICAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x4ce369(0x1ab)]=undefined,this[_0x4ce369(0x196)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST (?:HORZ|HORIZONTAL) CONTRAST: (.*) TO (.*)>/i)&&(this[_0x4ce369(0x17c)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4ce369(0x1b0)]=undefined),_0x5f45b6['match'](/<COLOR ADJUST (?:VERT|VERTICAL) CONTRAST: (.*) TO (.*)>/i)&&(this[_0x4ce369(0x17c)]=undefined,this[_0x4ce369(0x1b0)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST (?:HORZ|HORIZONTAL) SATURATE: (.*) TO (.*)>/i)&&(this[_0x4ce369(0x199)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4ce369(0x163)]=undefined),_0x5f45b6[_0x4ce369(0x17a)](/<COLOR ADJUST (?:VERT|VERTICAL) SATURATE: (.*) TO (.*)>/i)&&(this['_brightEffectsColorAdjustHorzSaturate']=undefined,this['_brightEffectsColorAdjustVertSaturate']=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen['setBrightEffectsColorAdjustSettings'](_0x39a0f0,_0x229c55,_0x22289e,0x0);},VisuMZ[_0x2649d9(0x1aa)][_0x2649d9(0x171)]=Game_CharacterBase['prototype'][_0x2649d9(0x19a)],Game_CharacterBase[_0x2649d9(0x1b6)]['locate']=function(_0x335d40,_0xcefa11){var _0x384664=_0x2649d9;VisuMZ[_0x384664(0x1aa)][_0x384664(0x171)]['call'](this,_0x335d40,_0xcefa11),this===$gamePlayer&&this[_0x384664(0x16c)]();},VisuMZ[_0x2649d9(0x1aa)][_0x2649d9(0x1d4)]=Game_Player[_0x2649d9(0x1b6)][_0x2649d9(0x191)],Game_Player['prototype'][_0x2649d9(0x191)]=function(_0x20bfb4){var _0x7a4bda=_0x2649d9;VisuMZ['BrightEffects'][_0x7a4bda(0x1d4)]['call'](this,_0x20bfb4),this[_0x7a4bda(0x16c)]();},Game_Player['prototype'][_0x2649d9(0x16c)]=function(){var _0x2471a3=_0x2649d9;if(ConfigManager['specialEffects']===![])return;this[_0x2471a3(0x150)](),this[_0x2471a3(0x1d8)](),this[_0x2471a3(0x1b9)]();},Game_Player[_0x2649d9(0x1b6)][_0x2649d9(0x150)]=function(){var _0x21e1be=_0x2649d9,_0x537c47=$gameScreen[_0x21e1be(0x155)](),_0x2a4536=_0x537c47[_0x21e1be(0x15c)],_0x24db19=_0x537c47[_0x21e1be(0x195)],_0x5550e2=_0x537c47[_0x21e1be(0x1bd)];if($gameMap[_0x21e1be(0x186)]!==undefined)var _0x187221=$gameMap[_0x21e1be(0x186)][0x0],_0xaed136=$gameMap['_brightEffectsBloomHorzScale'][0x1]-_0x187221,_0x496eca=$gamePlayer[_0x21e1be(0x1d3)]/$gameMap[_0x21e1be(0x16f)](),_0x2a4536=_0x187221+_0xaed136*_0x496eca;else{if($gameMap['_brightEffectsBloomVertScale']!==undefined)var _0x187221=$gameMap['_brightEffectsBloomVertScale'][0x0],_0xaed136=$gameMap['_brightEffectsBloomVertScale'][0x1]-_0x187221,_0x496eca=$gamePlayer['_realY']/$gameMap[_0x21e1be(0x1c3)](),_0x2a4536=_0x187221+_0xaed136*_0x496eca;}if($gameMap['_brightEffectsBloomHorzBrightness']!==undefined)var _0x187221=$gameMap[_0x21e1be(0x1d0)][0x0],_0xaed136=$gameMap[_0x21e1be(0x1d0)][0x1]-_0x187221,_0x496eca=$gamePlayer[_0x21e1be(0x1d3)]/$gameMap[_0x21e1be(0x16f)](),_0x24db19=_0x187221+_0xaed136*_0x496eca;else{if($gameMap['_brightEffectsBloomVertBrightness']!==undefined)var _0x187221=$gameMap[_0x21e1be(0x15a)][0x0],_0xaed136=$gameMap[_0x21e1be(0x15a)][0x1]-_0x187221,_0x496eca=$gamePlayer[_0x21e1be(0x1a8)]/$gameMap['height'](),_0x24db19=_0x187221+_0xaed136*_0x496eca;}if($gameMap[_0x21e1be(0x1bb)]!==undefined)var _0x187221=$gameMap[_0x21e1be(0x1bb)][0x0],_0xaed136=$gameMap['_brightEffectsBloomHorzThreshold'][0x1]-_0x187221,_0x496eca=$gamePlayer[_0x21e1be(0x1d3)]/$gameMap[_0x21e1be(0x16f)](),_0x5550e2=_0x187221+_0xaed136*_0x496eca;else{if($gameMap[_0x21e1be(0x1d5)]!==undefined)var _0x187221=$gameMap[_0x21e1be(0x1d5)][0x0],_0xaed136=$gameMap[_0x21e1be(0x1d5)][0x1]-_0x187221,_0x496eca=$gamePlayer[_0x21e1be(0x1a8)]/$gameMap[_0x21e1be(0x1c3)](),_0x5550e2=_0x187221+_0xaed136*_0x496eca;}$gameScreen[_0x21e1be(0x156)](_0x2a4536,_0x24db19,_0x5550e2,_0x537c47['duration']);},Game_Player[_0x2649d9(0x1b6)][_0x2649d9(0x1d8)]=function(){var _0x304dc2=_0x2649d9,_0xc25fb7=$gameScreen[_0x304dc2(0x18f)](),_0x14417d=_0xc25fb7[_0x304dc2(0x184)],_0x39618b=_0xc25fb7['speed'],_0x44fc94=_0xc25fb7['gain'],_0x45841e=_0xc25fb7[_0x304dc2(0x1b7)],_0x407352=_0xc25fb7[_0x304dc2(0x15f)];if($gameMap[_0x304dc2(0x1a5)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x1a5)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x1a5)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer[_0x304dc2(0x1d3)]/$gameMap[_0x304dc2(0x16f)](),_0x39618b=_0x50d5a5+_0x19bf03*_0x5ad692;else{if($gameMap[_0x304dc2(0x1cc)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x1b8)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x1b8)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer['_realY']/$gameMap[_0x304dc2(0x1c3)](),_0x39618b=_0x50d5a5+_0x19bf03*_0x5ad692;}if($gameMap[_0x304dc2(0x17e)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x17e)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x17e)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer[_0x304dc2(0x1d3)]/$gameMap[_0x304dc2(0x16f)](),_0x44fc94=_0x50d5a5+_0x19bf03*_0x5ad692;else{if($gameMap[_0x304dc2(0x1ca)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x1ca)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x1ca)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer['_realY']/$gameMap['height'](),_0x44fc94=_0x50d5a5+_0x19bf03*_0x5ad692;}if($gameMap[_0x304dc2(0x1b2)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x1b2)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x1b2)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer['_realX']/$gameMap['width'](),_0x45841e=_0x50d5a5+_0x19bf03*_0x5ad692;else{if($gameMap[_0x304dc2(0x176)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x176)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x176)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer[_0x304dc2(0x1a8)]/$gameMap[_0x304dc2(0x1c3)](),_0x45841e=_0x50d5a5+_0x19bf03*_0x5ad692;}if($gameMap[_0x304dc2(0x17d)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x17d)][0x0],_0x19bf03=$gameMap[_0x304dc2(0x17d)][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer[_0x304dc2(0x1d3)]/$gameMap[_0x304dc2(0x16f)](),_0x407352=_0x50d5a5+_0x19bf03*_0x5ad692;else{if($gameMap[_0x304dc2(0x161)]!==undefined)var _0x50d5a5=$gameMap[_0x304dc2(0x161)][0x0],_0x19bf03=$gameMap['_brightEffectsGodrayVertAngle'][0x1]-_0x50d5a5,_0x5ad692=$gamePlayer[_0x304dc2(0x1a8)]/$gameMap['height'](),_0x407352=_0x50d5a5+_0x19bf03*_0x5ad692;}$gameScreen[_0x304dc2(0x1af)](_0x14417d,_0x39618b,_0x44fc94,_0x45841e,_0x407352,_0xc25fb7[_0x304dc2(0x1a1)]);},Game_Player['prototype'][_0x2649d9(0x1b9)]=function(){var _0x4009f5=_0x2649d9,_0x39b68f=$gameScreen['getBrightEffectsColorAdjustSettings'](),_0x29eb83=_0x39b68f['brightness'],_0x462917=_0x39b68f[_0x4009f5(0x1a7)],_0xaf7037=_0x39b68f[_0x4009f5(0x174)];if($gameMap[_0x4009f5(0x1ab)]!==undefined)var _0x5d0f90=$gameMap[_0x4009f5(0x1ab)][0x0],_0x165c51=$gameMap[_0x4009f5(0x1ab)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1d3)]/$gameMap[_0x4009f5(0x16f)](),_0x29eb83=_0x5d0f90+_0x165c51*_0xa36251;else{if($gameMap[_0x4009f5(0x196)]!==undefined)var _0x5d0f90=$gameMap[_0x4009f5(0x196)][0x0],_0x165c51=$gameMap[_0x4009f5(0x196)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1a8)]/$gameMap[_0x4009f5(0x1c3)](),_0x29eb83=_0x5d0f90+_0x165c51*_0xa36251;}if($gameMap[_0x4009f5(0x17c)]!==undefined)var _0x5d0f90=$gameMap[_0x4009f5(0x17c)][0x0],_0x165c51=$gameMap[_0x4009f5(0x17c)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1d3)]/$gameMap[_0x4009f5(0x16f)](),_0x462917=_0x5d0f90+_0x165c51*_0xa36251;else{if($gameMap[_0x4009f5(0x1b0)]!==undefined)var _0x5d0f90=$gameMap['_brightEffectsColorAdjustVertContrast'][0x0],_0x165c51=$gameMap[_0x4009f5(0x1b0)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1a8)]/$gameMap['height'](),_0x462917=_0x5d0f90+_0x165c51*_0xa36251;}if($gameMap['_brightEffectsColorAdjustHorzSaturate']!==undefined)var _0x5d0f90=$gameMap[_0x4009f5(0x199)][0x0],_0x165c51=$gameMap[_0x4009f5(0x199)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1d3)]/$gameMap[_0x4009f5(0x16f)](),_0xaf7037=_0x5d0f90+_0x165c51*_0xa36251;else{if($gameMap['_brightEffectsColorAdjustVertSaturate']!==undefined)var _0x5d0f90=$gameMap[_0x4009f5(0x163)][0x0],_0x165c51=$gameMap[_0x4009f5(0x163)][0x1]-_0x5d0f90,_0xa36251=$gamePlayer[_0x4009f5(0x1a8)]/$gameMap[_0x4009f5(0x1c3)](),_0xaf7037=_0x5d0f90+_0x165c51*_0xa36251;}$gameScreen[_0x4009f5(0x1dd)](_0x29eb83,_0x462917,_0xaf7037,_0x39b68f['duration']);},VisuMZ['BrightEffects'][_0x2649d9(0x182)]=Spriteset_Base[_0x2649d9(0x1b6)]['createOverallFilters'],Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x1e2)]=function(){var _0x4c566a=_0x2649d9;VisuMZ['BrightEffects'][_0x4c566a(0x182)][_0x4c566a(0x18d)](this),this[_0x4c566a(0x1c4)]();},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x1c4)]=function(){var _0x532950=_0x2649d9;if(ConfigManager[_0x532950(0x1e1)]===![])return;this[_0x532950(0x19f)]=this[_0x532950(0x19f)]||[],this[_0x532950(0x1d2)](),this[_0x532950(0x178)](),this[_0x532950(0x1c8)](),this['updateBrightEffectsFilters']();},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x1d2)]=function(){var _0x10e806=_0x2649d9;this[_0x10e806(0x1c1)]=new PIXI['filters'][(_0x10e806(0x19c))](),this[_0x10e806(0x19f)][_0x10e806(0x19d)](this[_0x10e806(0x1c1)]);},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x178)]=function(){var _0x59e8b8=_0x2649d9;this['_BrightEffectsGodrayFilter']=new PIXI[(_0x59e8b8(0x19f))][(_0x59e8b8(0x181))](),this[_0x59e8b8(0x187)][_0x59e8b8(0x1df)]=![],this[_0x59e8b8(0x19f)][_0x59e8b8(0x19d)](this[_0x59e8b8(0x187)]);},Spriteset_Base['prototype'][_0x2649d9(0x1c8)]=function(){var _0x186548=_0x2649d9;this[_0x186548(0x1cd)]=new PIXI[(_0x186548(0x19f))]['ColorMatrixFilter'](),this[_0x186548(0x19f)][_0x186548(0x19d)](this[_0x186548(0x1cd)]);},VisuMZ[_0x2649d9(0x1aa)]['Spriteset_Base_update']=Spriteset_Base['prototype'][_0x2649d9(0x191)],Spriteset_Base['prototype']['update']=function(){var _0x2035a3=_0x2649d9;VisuMZ[_0x2035a3(0x1aa)][_0x2035a3(0x1ad)]['call'](this),this[_0x2035a3(0x158)]();},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x158)]=function(){var _0x2d98fa=_0x2649d9;this[_0x2d98fa(0x1b5)](),this[_0x2d98fa(0x168)](),this[_0x2d98fa(0x193)]();},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x1b5)]=function(){var _0x4b9bbb=_0x2649d9;if(!!this[_0x4b9bbb(0x1c1)]){var _0x323aa3=$gameScreen['getBrightEffectsAdvBloomSettings'](),_0x3447dc=_0x323aa3['duration'];_0x3447dc<=0x0?(this[_0x4b9bbb(0x1c1)][_0x4b9bbb(0x15c)]=_0x323aa3[_0x4b9bbb(0x15c)],this['_BrightEffectsAdvBloomFilter'][_0x4b9bbb(0x195)]=_0x323aa3['brightness'],this[_0x4b9bbb(0x1c1)][_0x4b9bbb(0x1bd)]=_0x323aa3[_0x4b9bbb(0x1bd)]):(_0x323aa3[_0x4b9bbb(0x1a1)]--,this[_0x4b9bbb(0x1c1)]['bloomScale']=(this[_0x4b9bbb(0x1c1)][_0x4b9bbb(0x15c)]*(_0x3447dc-0x1)+_0x323aa3['bloomScale'])/_0x3447dc,this[_0x4b9bbb(0x1c1)][_0x4b9bbb(0x195)]=(this['_BrightEffectsAdvBloomFilter'][_0x4b9bbb(0x195)]*(_0x3447dc-0x1)+_0x323aa3[_0x4b9bbb(0x195)])/_0x3447dc,this[_0x4b9bbb(0x1c1)]['threshold']=(this[_0x4b9bbb(0x1c1)][_0x4b9bbb(0x1bd)]*(_0x3447dc-0x1)+_0x323aa3[_0x4b9bbb(0x1bd)])/_0x3447dc);}},Spriteset_Base['prototype']['updateBrightEffectsGodrayFilter']=function(){var _0x4f17a6=_0x2649d9;if(!!this[_0x4f17a6(0x187)]){var _0x461cea=$gameScreen[_0x4f17a6(0x18f)](),_0x1c09bc=_0x461cea[_0x4f17a6(0x1a1)];_0x1c09bc<=0x0?(this[_0x4f17a6(0x187)][_0x4f17a6(0x1e3)]=_0x461cea[_0x4f17a6(0x1e3)],this[_0x4f17a6(0x187)][_0x4f17a6(0x167)]=_0x461cea['gain'],this[_0x4f17a6(0x187)][_0x4f17a6(0x1b7)]=_0x461cea[_0x4f17a6(0x1b7)],this[_0x4f17a6(0x187)][_0x4f17a6(0x15f)]=_0x461cea[_0x4f17a6(0x15f)]):(_0x461cea[_0x4f17a6(0x1a1)]--,this[_0x4f17a6(0x187)][_0x4f17a6(0x1e3)]=(this['_BrightEffectsGodrayFilter'][_0x4f17a6(0x1e3)]*(_0x1c09bc-0x1)+_0x461cea[_0x4f17a6(0x1e3)])/_0x1c09bc,this['_BrightEffectsGodrayFilter']['gain']=(this[_0x4f17a6(0x187)]['gain']*(_0x1c09bc-0x1)+_0x461cea[_0x4f17a6(0x167)])/_0x1c09bc,this[_0x4f17a6(0x187)][_0x4f17a6(0x1b7)]=(this[_0x4f17a6(0x187)][_0x4f17a6(0x1b7)]*(_0x1c09bc-0x1)+_0x461cea['lacunarity'])/_0x1c09bc,this[_0x4f17a6(0x187)][_0x4f17a6(0x15f)]=(this[_0x4f17a6(0x187)][_0x4f17a6(0x15f)]*(_0x1c09bc-0x1)+_0x461cea[_0x4f17a6(0x15f)])/_0x1c09bc),this['_BrightEffectsGodrayFilter']['time']+=this[_0x4f17a6(0x187)][_0x4f17a6(0x1e3)],this['_BrightEffectsGodrayFilter'][_0x4f17a6(0x1df)]=_0x461cea['visible'];}},Spriteset_Base[_0x2649d9(0x1b6)][_0x2649d9(0x193)]=function(){var _0x4ff2f8=_0x2649d9;if(!!this[_0x4ff2f8(0x1cd)]){var _0x2dfb6f=$gameScreen[_0x4ff2f8(0x1de)](),_0x2ff324=_0x2dfb6f[_0x4ff2f8(0x1a1)];_0x2ff324<=0x0?(this['_BrightEffectsColorAdjustFilter'][_0x4ff2f8(0x1c9)]=_0x2dfb6f[_0x4ff2f8(0x195)],this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x16b)]=_0x2dfb6f[_0x4ff2f8(0x1a7)],this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x19b)]=_0x2dfb6f[_0x4ff2f8(0x174)]):(_0x2dfb6f[_0x4ff2f8(0x1a1)]--,this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x1c9)]=(this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x1c9)]*(_0x2ff324-0x1)+_0x2dfb6f[_0x4ff2f8(0x195)])/_0x2ff324,this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x16b)]=(this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x16b)]*(_0x2ff324-0x1)+_0x2dfb6f[_0x4ff2f8(0x1a7)])/_0x2ff324,this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x19b)]=(this[_0x4ff2f8(0x1cd)]['currentSaturate']*(_0x2ff324-0x1)+_0x2dfb6f[_0x4ff2f8(0x174)])/_0x2ff324),this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x195)](this[_0x4ff2f8(0x1cd)]['currentBrightness']),this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x1a7)](this['_BrightEffectsColorAdjustFilter']['currentContrast'],!![]),this[_0x4ff2f8(0x1cd)]['saturate'](this[_0x4ff2f8(0x1cd)][_0x4ff2f8(0x19b)],!![]);}};
+function _0x5ae2(){var _0x28df35=['MapColorAdjust','min','format','Brightness','8vDoeGB','setupBrightEffectsTiltShiftFilter','_BrightEffectsColorAdjustSettingsBattle','6417131nakMtC','return\x200','getBrightEffectsBlurSettings','gradientBlur','_BrightEffectsBlurFilter','filter','constructor','updateBrightEffectsColorAdjustFilter','_brightEffectsGodrayHorzSpeed','ARRAYJSON','Saturate','_BrightEffectsTiltShiftSettingsBattle','bloomScale','_brightEffectsBloomHorzBrightness','setMapEnhanceTiltShiftFilterY','_brightEffectsColorAdjustHorzSaturate','_brightEffectsBloomHorzScale','description','Game_Map_setup','Speed','Scale','ARRAYSTR','Duration','pixelBlur','1051726jEnfkQ','MapBaseFilter','updateMapBrightEffectsAdvBloom','_brightEffectsColorAdjustVertBrightness','100eNpNqZ','setupBrightEffectsFilters','_BrightEffectsAdvBloomFilter','saturate','currentContrast','setup','setBrightEffectsAdvBloomSettings','Scene_Boot_onDatabaseLoaded','updateBrightEffectsGodrayFilter','match','_brightEffectsGodrayHorzAngle','brightEffectsBaseOnly','max','trim','createBrightEffectsBlurFilter','getTiltShiftFilter','updateBrightEffectsTiltShiftFilterProperties','getBrightEffectsAdvBloomSettings','width','createOverallFilters','STRUCT','contrast','_brightEffectsGodrayVertGain','BattleBaseFilter','MapBloom','start','Game_Player_update','updateBrightEffectsFilters','screenY','_BrightEffectsGodraySettingsMap','_scene','updateMapBrightEffects','getBrightEffectsTiltShiftSettings','_BrightEffectsGodrayFilter','setBrightEffectsBlurSettings','lacunarity','tileFocus','toUpperCase','TILT_SHIFT_MAP_FILTER','Settings','currentSaturate','_BrightEffectsBlurSettingsBattle','getBrightEffectsColorAdjustSettings','createBrightEffectsFilters','getBrightEffectsGodraySettings','181518yMiSXI','_BrightEffectsAdvBloomSettingsBattle','map','_BrightEffectsColorAdjustSettingsMap','GradientBlur','currentPixelBlur','_brightEffectsBloomVertThreshold','Scene_Battle_start','registerCommand','prototype','Gain','_brightEffectsGodrayHorzGain','update','angle','tileHeight','_brightEffectsColorAdjustHorzContrast','end','%1\x20is\x20missing\x20a\x20required\x20plugin.\x0aPlease\x20install\x20%2\x20into\x20the\x20Plugin\x20Manager.','_brightEffectsBloomVertScale','brightness','_realY','EVAL','call','VisuMZ_3_MapCameraZoom','Visible','FUNC','setBrightEffectsColorAdjustSettings','ConvertParams','JSON','STR','currentGradientBlur','updateBrightEffectsAdvBloomFilter','5FGCaRL','_BrightEffectsAdvBloomSettingsMap','updateBrightEffectsBlurFilter','getMapEnhanceScreenY','includes','BattleTiltShift','10571946KrAxoA','ColorAdjustChange','_brightEffectsColorAdjustVertSaturate','threshold','createBrightEffectsGodrayFilter','ARRAYFUNC','locate','troop','blur','AdvancedBloomFilter','NUM','Threshold','setupBrightEffectsBlurFilter','onDatabaseLoaded','Blur','115917GRfMCI','setBrightEffectsTiltShiftSettings','BrightEffects','BRIGHT_EFFECTS_BASE_ONLY','_BrightEffectsColorAdjustFilter','mapCameraSettings','Contrast','setupBrightEffectsAdvBloomFilter','updateBrightEffectsTiltShiftFilter','_brightEffectsColorAdjustVertContrast','currentBrightness','_BrightEffectsBlurSettingsMap','duration','ARRAYEVAL','_brightEffectsBloomVertBrightness','createBrightEffectsTiltShiftFilter','ColorAdjustReset','gain','visible','GodrayFilter','Spriteset_Base_createOverallFilters','_realX','Spriteset_Base_update','BattleBloom','TiltShiftFilter','filters','updateMapBrightEffectsColorAdjust','_brightEffectsGodrayVertSpeed','BlurReset','status','setupBrightEffectsGodrayFilter','currentBlur','push','_brightEffectsGodrayVertLacunarity','MapGodray','BlurFilter','Angle','2290494WHEayV','TILT_SHIFT_BATTLE_FILTER','note','18369jUbzCj','createBrightEffectsColorAdjustFilter','time','setupBrightEffectsColorAdjustFilter','_brightEffectsGodrayVertAngle','findTargetSprite','_BrightEffectsGodraySettingsBattle','exit','ARRAYSTRUCT','name','setBrightEffectsGodraySettings','_brightEffectsColorAdjustHorzBrightness','_BrightEffectsTiltShiftFilter','ColorMatrixFilter','_baseSprite','parse','BloomChange','Lacunarity','isSceneBattle','Game_CharacterBase_locate','_brightEffectsGodrayHorzLacunarity','parameters','BattleGodray','specialEffects','height','6150IcGRJf','_brightEffectsBloomHorzThreshold','speed','_BrightEffectsTiltShiftSettingsMap'];_0x5ae2=function(){return _0x28df35;};return _0x5ae2();}var _0x5511ce=_0x41d1;(function(_0x3bbbba,_0x4011cc){var _0x23ffff=_0x41d1,_0xaaaca3=_0x3bbbba();while(!![]){try{var _0x3872ed=parseInt(_0x23ffff(0x1c6))/0x1+parseInt(_0x23ffff(0x195))/0x2+-parseInt(_0x23ffff(0x1fb))/0x3*(-parseInt(_0x23ffff(0x199))/0x4)+parseInt(_0x23ffff(0x1e6))/0x5*(parseInt(_0x23ffff(0x220))/0x6)+-parseInt(_0x23ffff(0x17d))/0x7*(-parseInt(_0x23ffff(0x17a))/0x8)+-parseInt(_0x23ffff(0x223))/0x9*(parseInt(_0x23ffff(0x172))/0xa)+-parseInt(_0x23ffff(0x1ec))/0xb;if(_0x3872ed===_0x4011cc)break;else _0xaaaca3['push'](_0xaaaca3['shift']());}catch(_0x20befb){_0xaaaca3['push'](_0xaaaca3['shift']());}}}(_0x5ae2,0xb8751));var label='BrightEffects',tier=tier||0x0,dependencies=[],pluginData=$plugins[_0x5511ce(0x182)](function(_0x416a3e){var _0x1fe8b6=_0x5511ce;return _0x416a3e[_0x1fe8b6(0x218)]&&_0x416a3e[_0x1fe8b6(0x18e)][_0x1fe8b6(0x1ea)]('['+label+']');})[0x0];function _0x41d1(_0x1bc0c0,_0x30e65c){var _0x5ae2fe=_0x5ae2();return _0x41d1=function(_0x41d145,_0x20d6c7){_0x41d145=_0x41d145-0x15d;var _0x2a0782=_0x5ae2fe[_0x41d145];return _0x2a0782;},_0x41d1(_0x1bc0c0,_0x30e65c);}VisuMZ[label][_0x5511ce(0x1c0)]=VisuMZ[label][_0x5511ce(0x1c0)]||{},VisuMZ[_0x5511ce(0x1e1)]=function(_0x2e1904,_0x1761e6){var _0x479e4f=_0x5511ce;for(const _0x5e9d2b in _0x1761e6){if(_0x5e9d2b[_0x479e4f(0x1a2)](/(.*):(.*)/i)){const _0x477506=String(RegExp['$1']),_0x7d7983=String(RegExp['$2'])[_0x479e4f(0x1be)]()[_0x479e4f(0x1a6)]();let _0x110228,_0x22c68a,_0x53de29;switch(_0x7d7983){case _0x479e4f(0x1f6):_0x110228=_0x1761e6[_0x5e9d2b]!==''?Number(_0x1761e6[_0x5e9d2b]):0x0;break;case'ARRAYNUM':_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a[_0x479e4f(0x1c8)](_0x204e7f=>Number(_0x204e7f));break;case _0x479e4f(0x1db):_0x110228=_0x1761e6[_0x5e9d2b]!==''?eval(_0x1761e6[_0x5e9d2b]):null;break;case _0x479e4f(0x208):_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a['map'](_0xc3214d=>eval(_0xc3214d));break;case _0x479e4f(0x1e2):_0x110228=_0x1761e6[_0x5e9d2b]!==''?JSON['parse'](_0x1761e6[_0x5e9d2b]):'';break;case _0x479e4f(0x186):_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a[_0x479e4f(0x1c8)](_0x45b9ea=>JSON[_0x479e4f(0x168)](_0x45b9ea));break;case _0x479e4f(0x1df):_0x110228=_0x1761e6[_0x5e9d2b]!==''?new Function(JSON['parse'](_0x1761e6[_0x5e9d2b])):new Function(_0x479e4f(0x17e));break;case _0x479e4f(0x1f1):_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a[_0x479e4f(0x1c8)](_0x593ab3=>new Function(JSON['parse'](_0x593ab3)));break;case _0x479e4f(0x1e3):_0x110228=_0x1761e6[_0x5e9d2b]!==''?String(_0x1761e6[_0x5e9d2b]):'';break;case _0x479e4f(0x192):_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a['map'](_0x2f45b7=>String(_0x2f45b7));break;case _0x479e4f(0x1ad):_0x53de29=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):{},_0x110228=VisuMZ[_0x479e4f(0x1e1)]({},_0x53de29);break;case _0x479e4f(0x161):_0x22c68a=_0x1761e6[_0x5e9d2b]!==''?JSON[_0x479e4f(0x168)](_0x1761e6[_0x5e9d2b]):[],_0x110228=_0x22c68a['map'](_0x24feb4=>VisuMZ[_0x479e4f(0x1e1)]({},JSON['parse'](_0x24feb4)));break;default:continue;}_0x2e1904[_0x477506]=_0x110228;}}return _0x2e1904;},(_0x3d1606=>{var _0x5ea50c=_0x5511ce;const _0x49ae92=_0x3d1606['name'];for(const _0x502135 of dependencies){if(!Imported[_0x502135]){alert(_0x5ea50c(0x1d7)[_0x5ea50c(0x178)](_0x49ae92,_0x502135)),SceneManager[_0x5ea50c(0x160)]();break;}}const _0x6a0dfd=_0x3d1606[_0x5ea50c(0x18e)];if(_0x6a0dfd['match'](/\[Version[ ](.*?)\]/i)){const _0x3fc249=Number(RegExp['$1']);_0x3fc249!==VisuMZ[label]['version']&&(alert('%1\x27s\x20version\x20does\x20not\x20match\x20plugin\x27s.\x20Please\x20update\x20it\x20in\x20the\x20Plugin\x20Manager.'['format'](_0x49ae92,_0x3fc249)),SceneManager[_0x5ea50c(0x160)]());}if(_0x6a0dfd[_0x5ea50c(0x1a2)](/\[Tier[ ](\d+)\]/i)){const _0xccb742=Number(RegExp['$1']);_0xccb742<tier?(alert('%1\x20is\x20incorrectly\x20placed\x20on\x20the\x20plugin\x20list.\x0aIt\x20is\x20a\x20Tier\x20%2\x20plugin\x20placed\x20over\x20other\x20Tier\x20%3\x20plugins.\x0aPlease\x20reorder\x20the\x20plugin\x20list\x20from\x20smallest\x20to\x20largest\x20tier\x20numbers.'[_0x5ea50c(0x178)](_0x49ae92,_0xccb742,tier)),SceneManager[_0x5ea50c(0x160)]()):tier=Math[_0x5ea50c(0x1a5)](_0xccb742,tier);}VisuMZ[_0x5ea50c(0x1e1)](VisuMZ[label][_0x5ea50c(0x1c0)],_0x3d1606[_0x5ea50c(0x16e)]);})(pluginData),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],_0x5511ce(0x169),_0x12072e=>{var _0x48bd0a=_0x5511ce;VisuMZ[_0x48bd0a(0x1e1)](_0x12072e,_0x12072e);const _0x23c19b=$gameScreen['getBrightEffectsAdvBloomSettings']();_0x23c19b[_0x48bd0a(0x189)]=_0x12072e[_0x48bd0a(0x191)],_0x23c19b[_0x48bd0a(0x1d9)]=_0x12072e[_0x48bd0a(0x179)],_0x23c19b[_0x48bd0a(0x1ef)]=_0x12072e['Threshold'],_0x23c19b[_0x48bd0a(0x207)]=_0x12072e['Duration'],!SceneManager[_0x48bd0a(0x16b)]()&&($gameMap[_0x48bd0a(0x18a)]=undefined,$gameMap[_0x48bd0a(0x209)]=undefined);}),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],'BloomReset',_0x11258c=>{var _0x31ba0d=_0x5511ce;VisuMZ[_0x31ba0d(0x1e1)](_0x11258c,_0x11258c);SceneManager[_0x31ba0d(0x16b)]()?$gameTroop[_0x31ba0d(0x202)]():$gameMap[_0x31ba0d(0x202)]();const _0x169ba4=$gameScreen[_0x31ba0d(0x1aa)]();_0x169ba4['duration']=_0x11258c[_0x31ba0d(0x193)];}),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],'BlurChange',_0x489e81=>{var _0x29fee3=_0x5511ce;VisuMZ[_0x29fee3(0x1e1)](_0x489e81,_0x489e81);const _0x1bfef7=$gameScreen['getBrightEffectsBlurSettings']();_0x1bfef7['blur']=_0x489e81[_0x29fee3(0x1fa)],_0x1bfef7['duration']=_0x489e81[_0x29fee3(0x193)];}),PluginManager[_0x5511ce(0x1ce)](pluginData['name'],_0x5511ce(0x217),_0x47411c=>{var _0x2eb9fb=_0x5511ce;VisuMZ[_0x2eb9fb(0x1e1)](_0x47411c,_0x47411c);SceneManager['isSceneBattle']()?$gameTroop[_0x2eb9fb(0x1f8)]():$gameMap['setupBrightEffectsBlurFilter']();const _0x266afc=$gameScreen[_0x2eb9fb(0x17f)]();_0x266afc[_0x2eb9fb(0x207)]=_0x47411c['Duration'];}),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],'GodrayChange',_0xc8c91a=>{var _0x38d384=_0x5511ce;VisuMZ[_0x38d384(0x1e1)](_0xc8c91a,_0xc8c91a);const _0x29ec50=$gameScreen['getBrightEffectsGodraySettings']();_0x29ec50['visible']=_0xc8c91a[_0x38d384(0x1de)],_0x29ec50[_0x38d384(0x174)]=_0xc8c91a['Speed'],_0x29ec50[_0x38d384(0x20c)]=_0xc8c91a['Gain'],_0x29ec50[_0x38d384(0x1bc)]=_0xc8c91a[_0x38d384(0x16a)],_0x29ec50[_0x38d384(0x1d3)]=_0xc8c91a[_0x38d384(0x21f)],_0x29ec50[_0x38d384(0x207)]=_0xc8c91a['Duration'],!SceneManager[_0x38d384(0x16b)]()&&($gameMap[_0x38d384(0x185)]=undefined,$gameMap[_0x38d384(0x216)]=undefined);}),PluginManager['registerCommand'](pluginData[_0x5511ce(0x162)],'GodrayReset',_0x3f9300=>{var _0x51515a=_0x5511ce;VisuMZ[_0x51515a(0x1e1)](_0x3f9300,_0x3f9300);SceneManager[_0x51515a(0x16b)]()?$gameTroop['setupBrightEffectsGodrayFilter']():$gameMap[_0x51515a(0x219)]();const _0x35c28d=$gameScreen[_0x51515a(0x1c5)]();_0x35c28d[_0x51515a(0x207)]=_0x3f9300[_0x51515a(0x193)];}),PluginManager[_0x5511ce(0x1ce)](pluginData['name'],_0x5511ce(0x1ed),_0x30d9d9=>{var _0x550175=_0x5511ce;VisuMZ[_0x550175(0x1e1)](_0x30d9d9,_0x30d9d9);const _0x3602d8=$gameScreen[_0x550175(0x1c3)]();_0x3602d8[_0x550175(0x1d9)]=_0x30d9d9[_0x550175(0x179)],_0x3602d8['contrast']=_0x30d9d9[_0x550175(0x201)],_0x3602d8[_0x550175(0x19c)]=_0x30d9d9['Saturate'],_0x3602d8[_0x550175(0x207)]=_0x30d9d9[_0x550175(0x193)],!SceneManager['isSceneBattle']()&&($gameMap[_0x550175(0x18c)]=undefined,$gameMap[_0x550175(0x1ee)]=undefined);}),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],_0x5511ce(0x20b),_0xc5ae64=>{var _0x4a157b=_0x5511ce;VisuMZ[_0x4a157b(0x1e1)](_0xc5ae64,_0xc5ae64);SceneManager[_0x4a157b(0x16b)]()?$gameTroop[_0x4a157b(0x226)]():$gameMap[_0x4a157b(0x226)]();const _0x52942f=$gameScreen[_0x4a157b(0x1c3)]();_0x52942f['duration']=_0xc5ae64[_0x4a157b(0x193)];}),PluginManager[_0x5511ce(0x1ce)](pluginData[_0x5511ce(0x162)],'TiltShiftChange',_0x59dd91=>{var _0x46e7bd=_0x5511ce;VisuMZ[_0x46e7bd(0x1e1)](_0x59dd91,_0x59dd91);const _0x3995ec=$gameScreen[_0x46e7bd(0x1b9)]();_0x3995ec[_0x46e7bd(0x194)]=_0x59dd91[_0x46e7bd(0x1fa)],_0x3995ec['gradientBlur']=_0x59dd91[_0x46e7bd(0x1ca)],_0x3995ec['duration']=_0x59dd91[_0x46e7bd(0x193)];}),PluginManager[_0x5511ce(0x1ce)](pluginData['name'],'TiltShiftReset',_0x4a2d65=>{var _0x37302c=_0x5511ce;VisuMZ[_0x37302c(0x1e1)](_0x4a2d65,_0x4a2d65);SceneManager[_0x37302c(0x16b)]()?$gameTroop[_0x37302c(0x17b)]():$gameMap[_0x37302c(0x17b)]();const _0x49b4fb=$gameScreen[_0x37302c(0x1b9)]();_0x49b4fb['duration']=_0x4a2d65[_0x37302c(0x193)];}),SceneManager[_0x5511ce(0x16b)]=function(){var _0x2d3e77=_0x5511ce;return this['_scene']&&this[_0x2d3e77(0x1b7)]['constructor']===Scene_Battle;},SceneManager['isSceneMap']=function(){var _0x4197c7=_0x5511ce;return this[_0x4197c7(0x1b7)]&&this[_0x4197c7(0x1b7)][_0x4197c7(0x183)]===Scene_Map;},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x19f)]=function(_0x1d50a3,_0x18b708,_0x4859b0,_0x17f0a6){var _0x55e4b5=_0x5511ce;SceneManager[_0x55e4b5(0x16b)]()?this[_0x55e4b5(0x1c7)]={'bloomScale':_0x1d50a3,'brightness':_0x18b708,'threshold':_0x4859b0,'duration':_0x17f0a6||0x0}:this[_0x55e4b5(0x1e7)]={'bloomScale':_0x1d50a3,'brightness':_0x18b708,'threshold':_0x4859b0,'duration':_0x17f0a6||0x0};},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1aa)]=function(){var _0x31b575=_0x5511ce;return SceneManager[_0x31b575(0x16b)]()?(this[_0x31b575(0x1c7)]===undefined&&$gameTroop[_0x31b575(0x202)](),this[_0x31b575(0x1c7)]):(this[_0x31b575(0x1e7)]===undefined&&$gameMap['setupBrightEffectsAdvBloomFilter'](),this[_0x31b575(0x1e7)]);},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x163)]=function(_0x2045c1,_0x4f2f4d,_0x39d46e,_0x388b87,_0x3604f0,_0x2319ce){var _0x3cc7dc=_0x5511ce;SceneManager['isSceneBattle']()?this[_0x3cc7dc(0x15f)]={'visible':_0x2045c1,'speed':_0x4f2f4d,'gain':_0x39d46e,'lacunarity':_0x388b87,'angle':_0x3604f0,'duration':_0x2319ce||0x0}:this[_0x3cc7dc(0x1b6)]={'visible':_0x2045c1,'speed':_0x4f2f4d,'gain':_0x39d46e,'lacunarity':_0x388b87,'angle':_0x3604f0,'duration':_0x2319ce||0x0};},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1c5)]=function(){var _0x1dfdb3=_0x5511ce;return SceneManager['isSceneBattle']()?(this[_0x1dfdb3(0x15f)]===undefined&&$gameTroop['setupBrightEffectsGodrayFilter'](),this['_BrightEffectsGodraySettingsBattle']):(this['_BrightEffectsGodraySettingsMap']===undefined&&$gameMap[_0x1dfdb3(0x219)](),this[_0x1dfdb3(0x1b6)]);},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1e0)]=function(_0x167fb4,_0x526bcc,_0xc78d1c,_0x17020c){var _0x51e65d=_0x5511ce;SceneManager[_0x51e65d(0x16b)]()?this[_0x51e65d(0x17c)]={'brightness':_0x167fb4,'contrast':_0x526bcc,'saturate':_0xc78d1c,'duration':_0x17020c||0x0}:this['_BrightEffectsColorAdjustSettingsMap']={'brightness':_0x167fb4,'contrast':_0x526bcc,'saturate':_0xc78d1c,'duration':_0x17020c||0x0};},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1c3)]=function(){var _0x3cce23=_0x5511ce;return SceneManager['isSceneBattle']()?(this[_0x3cce23(0x17c)]===undefined&&$gameTroop['setupBrightEffectsColorAdjustFilter'](),this[_0x3cce23(0x17c)]):(this[_0x3cce23(0x1c9)]===undefined&&$gameMap[_0x3cce23(0x226)](),this[_0x3cce23(0x1c9)]);},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1fc)]=function(_0x5ed1f2,_0x2c4ba8,_0x15dc9f){var _0x31e60c=_0x5511ce;SceneManager[_0x31e60c(0x16b)]()?this['_BrightEffectsTiltShiftSettingsBattle']={'pixelBlur':_0x5ed1f2,'gradientBlur':_0x2c4ba8,'duration':_0x15dc9f||0x0}:this[_0x31e60c(0x175)]={'pixelBlur':_0x5ed1f2,'gradientBlur':_0x2c4ba8,'duration':_0x15dc9f||0x0};},Game_Screen[_0x5511ce(0x1cf)][_0x5511ce(0x1b9)]=function(){var _0x25d02b=_0x5511ce;return SceneManager[_0x25d02b(0x16b)]()?(this[_0x25d02b(0x188)]===undefined&&$gameTroop[_0x25d02b(0x17b)](),this['_BrightEffectsTiltShiftSettingsBattle']):(this[_0x25d02b(0x175)]===undefined&&$gameMap[_0x25d02b(0x17b)](),this[_0x25d02b(0x175)]);},Game_Screen[_0x5511ce(0x1cf)]['setBrightEffectsBlurSettings']=function(_0x4ef610,_0x410add){var _0x1d6d06=_0x5511ce;SceneManager[_0x1d6d06(0x16b)]()?this['_BrightEffectsBlurSettingsBattle']={'blur':_0x4ef610||0x0,'duration':_0x410add||0x0}:this[_0x1d6d06(0x206)]={'blur':_0x4ef610||0x0,'duration':_0x410add||0x0};},Game_Screen[_0x5511ce(0x1cf)]['getBrightEffectsBlurSettings']=function(){var _0xf4efde=_0x5511ce;return SceneManager[_0xf4efde(0x16b)]()?(this[_0xf4efde(0x1c2)]===undefined&&$gameTroop['setupBrightEffectsBlurFilter'](),this[_0xf4efde(0x1c2)]):(this[_0xf4efde(0x206)]===undefined&&$gameMap[_0xf4efde(0x1f8)](),this['_BrightEffectsBlurSettingsMap']);},VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x1cd)]=Scene_Battle[_0x5511ce(0x1cf)][_0x5511ce(0x1b2)],Scene_Battle[_0x5511ce(0x1cf)][_0x5511ce(0x1b2)]=function(){var _0x4614c7=_0x5511ce;VisuMZ[_0x4614c7(0x1fd)][_0x4614c7(0x1cd)]['call'](this),$gameTroop['setupBrightEffectsFilters']();},Game_Troop[_0x5511ce(0x1cf)][_0x5511ce(0x19a)]=function(){var _0x3aca7d=_0x5511ce;this[_0x3aca7d(0x202)](),this[_0x3aca7d(0x219)](),this['setupBrightEffectsColorAdjustFilter'](),this[_0x3aca7d(0x17b)](),this[_0x3aca7d(0x1f8)]();},Game_Troop[_0x5511ce(0x1cf)][_0x5511ce(0x202)]=function(){var _0x2bf2b4=_0x5511ce;const _0x908743=VisuMZ['BrightEffects'][_0x2bf2b4(0x1c0)][_0x2bf2b4(0x212)];var _0x34c69a=_0x908743[_0x2bf2b4(0x191)],_0x14f785=_0x908743[_0x2bf2b4(0x179)],_0x97f1db=_0x908743[_0x2bf2b4(0x1f7)];if(!!this['troop']()){var _0x1b9dcb=this[_0x2bf2b4(0x1f3)]()[_0x2bf2b4(0x162)];if(_0x1b9dcb[_0x2bf2b4(0x1a2)](/<BLOOM SCALE: (.*)>/i))var _0x34c69a=Number(RegExp['$1'])||0x0;if(_0x1b9dcb[_0x2bf2b4(0x1a2)](/<BLOOM BRIGHTNESS: (.*)>/i))var _0x14f785=Number(RegExp['$1'])||0x0;if(_0x1b9dcb[_0x2bf2b4(0x1a2)](/<BLOOM THRESHOLD: (.*)>/i))var _0x97f1db=Number(RegExp['$1'])||0x0;}$gameScreen[_0x2bf2b4(0x19f)](_0x34c69a,_0x14f785,_0x97f1db,0x0);},Game_Troop[_0x5511ce(0x1cf)][_0x5511ce(0x219)]=function(){var _0x17fd52=_0x5511ce;const _0x46e505=VisuMZ['BrightEffects'][_0x17fd52(0x1c0)][_0x17fd52(0x16f)];var _0x133886=_0x46e505[_0x17fd52(0x1de)],_0x54f91f=_0x46e505[_0x17fd52(0x190)],_0x5ebe46=_0x46e505[_0x17fd52(0x1d0)],_0x977e89=_0x46e505['Lacunarity'],_0x17e0f6=_0x46e505[_0x17fd52(0x21f)];if(!!this['troop']()){var _0x996660=this[_0x17fd52(0x1f3)]()['name'];if(_0x996660[_0x17fd52(0x1a2)](/<GODRAY>/i))_0x133886=!![];else _0x996660['match'](/<NO GODRAY>/i)&&(_0x133886=![]);_0x996660['match'](/<GODRAY SPEED: (.*)>/i)&&(_0x54f91f=Number(RegExp['$1'])||0x0),_0x996660[_0x17fd52(0x1a2)](/<GODRAY GAIN: (.*)>/i)&&(_0x5ebe46=Number(RegExp['$1'])||0x0),_0x996660[_0x17fd52(0x1a2)](/<GODRAY LACUNARITY: (.*)>/i)&&(_0x977e89=Number(RegExp['$1'])||0x0),_0x996660['match'](/<GODRAY ANGLE: (.*)>/i)&&(_0x17e0f6=Number(RegExp['$1'])||0x0);}$gameScreen[_0x17fd52(0x163)](_0x133886,_0x54f91f,_0x5ebe46,_0x977e89,_0x17e0f6,0x0);},Game_Troop[_0x5511ce(0x1cf)]['setupBrightEffectsColorAdjustFilter']=function(){var _0x57ddfa=_0x5511ce;const _0x234a77=VisuMZ['BrightEffects'][_0x57ddfa(0x1c0)]['BattleColorAdjust'];var _0x5c147f=_0x234a77[_0x57ddfa(0x179)],_0x27ba05=_0x234a77['Contrast'],_0x16b826=_0x234a77['Saturate'];if(!!this['troop']()){var _0x3386cc=this['troop']()['name'];if(_0x3386cc[_0x57ddfa(0x1a2)](/<COLOR ADJUST BRIGHTNESS: (.*)>/i))var _0x5c147f=Number(RegExp['$1'])||0x0;if(_0x3386cc[_0x57ddfa(0x1a2)](/<COLOR ADJUST CONTRAST: (.*)>/i))var _0x27ba05=Number(RegExp['$1'])||0x0;if(_0x3386cc[_0x57ddfa(0x1a2)](/<COLOR ADJUST SATURATE: (.*)>/i))var _0x16b826=Number(RegExp['$1'])||0x0;}$gameScreen[_0x57ddfa(0x1e0)](_0x5c147f,_0x27ba05,_0x16b826,0x0);},Game_Troop[_0x5511ce(0x1cf)][_0x5511ce(0x17b)]=function(){var _0x550516=_0x5511ce;const _0x5cb819=VisuMZ[_0x550516(0x1fd)][_0x550516(0x1c0)][_0x550516(0x1eb)];let _0x50b60e=_0x5cb819['Blur'],_0x58413c=_0x5cb819['GradientBlur'];if(!!this['troop']()){const _0x4ff569=this['troop']()[_0x550516(0x162)];_0x4ff569[_0x550516(0x1a2)](/<(?:TILTSHIFT|TILT SHIFT) PIXEL BLUR:[ ](\d+)>/i)&&(_0x50b60e=Number(RegExp['$1'])),_0x4ff569['match'](/<(?:TILTSHIFT|TILT SHIFT) (?:GRAD|GRADIENT) BLUR:[ ](\d+)>/i)&&(_0x58413c=Number(RegExp['$1']));}$gameScreen[_0x550516(0x1fc)](_0x50b60e,_0x58413c,0x0);},Game_Troop[_0x5511ce(0x1cf)]['setupBrightEffectsBlurFilter']=function(){var _0xaed7cd=_0x5511ce;let _0x2bbb19=0x0;if(!!this[_0xaed7cd(0x1f3)]()){const _0x3530d2=this['troop']()[_0xaed7cd(0x162)];_0x3530d2['match'](/<BLUR:[ ](.*?)>/i)&&(_0x2bbb19=Number(RegExp['$1']));}$gameScreen[_0xaed7cd(0x1bb)](_0x2bbb19,0x0);},VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x18f)]=Game_Map[_0x5511ce(0x1cf)][_0x5511ce(0x19e)],Game_Map['prototype'][_0x5511ce(0x19e)]=function(_0x41a079){var _0x159d8c=_0x5511ce;VisuMZ[_0x159d8c(0x1fd)][_0x159d8c(0x18f)][_0x159d8c(0x1dc)](this,_0x41a079),!!$dataMap&&this[_0x159d8c(0x19a)]();},Game_Map[_0x5511ce(0x1cf)][_0x5511ce(0x19a)]=function(){var _0xd57b53=_0x5511ce;this[_0xd57b53(0x202)](),this[_0xd57b53(0x219)](),this[_0xd57b53(0x226)](),this[_0xd57b53(0x17b)](),$gamePlayer['updateMapBrightEffects']();},Game_Map[_0x5511ce(0x1cf)]['setupBrightEffectsAdvBloomFilter']=function(){var _0x43a78d=_0x5511ce;const _0x3f3dfe=VisuMZ[_0x43a78d(0x1fd)]['Settings'][_0x43a78d(0x1b1)];var _0xbaaee7=_0x3f3dfe['Scale'],_0x4e2f29=_0x3f3dfe[_0x43a78d(0x179)],_0x43ba20=_0x3f3dfe['Threshold'];this[_0x43a78d(0x18d)]=undefined,this[_0x43a78d(0x1d8)]=undefined,this[_0x43a78d(0x18a)]=undefined,this[_0x43a78d(0x209)]=undefined,this[_0x43a78d(0x173)]=undefined,this[_0x43a78d(0x1cc)]=undefined;if($dataMap){var _0x31e46e=$dataMap[_0x43a78d(0x222)]||'';if(_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM SCALE: (.*)>/i))var _0xbaaee7=Number(RegExp['$1'])||0x0;if(_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM BRIGHTNESS: (.*)>/i))var _0x4e2f29=Number(RegExp['$1'])||0x0;if(_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM THRESHOLD: (.*)>/i))var _0x43ba20=Number(RegExp['$1'])||0x0;_0x31e46e['match'](/<BLOOM (?:HORZ|HORIZONTAL) SCALE: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x18d)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x43a78d(0x1d8)]=undefined),_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM (?:VERT|VERTICAL) SCALE: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x18d)]=undefined,this[_0x43a78d(0x1d8)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM (?:HORZ|HORIZONTAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x18a)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x43a78d(0x209)]=undefined),_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM (?:VERT|VERTICAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x18a)]=undefined,this[_0x43a78d(0x209)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM (?:HORZ|HORIZONTAL) THRESHOLD: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x173)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this['_brightEffectsBloomVertThreshold']=undefined),_0x31e46e[_0x43a78d(0x1a2)](/<BLOOM (?:VERT|VERTICAL) THRESHOLD: (.*) TO (.*)>/i)&&(this[_0x43a78d(0x173)]=undefined,this[_0x43a78d(0x1cc)]=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen[_0x43a78d(0x19f)](_0xbaaee7,_0x4e2f29,_0x43ba20,0x0);},Game_Map[_0x5511ce(0x1cf)][_0x5511ce(0x219)]=function(){var _0x4493d5=_0x5511ce;const _0xf95aa9=VisuMZ[_0x4493d5(0x1fd)]['Settings'][_0x4493d5(0x21d)];var _0x2b75f0=_0xf95aa9[_0x4493d5(0x1de)],_0x275b39=_0xf95aa9[_0x4493d5(0x190)],_0x2c7eb2=_0xf95aa9[_0x4493d5(0x1d0)],_0x223070=_0xf95aa9['Lacunarity'],_0x19f82b=_0xf95aa9['Angle'];this['_brightEffectsGodrayHorzSpeed']=undefined,this[_0x4493d5(0x216)]=undefined,this[_0x4493d5(0x1d1)]=undefined,this[_0x4493d5(0x1af)]=undefined,this[_0x4493d5(0x16d)]=undefined,this['_brightEffectsGodrayVertLacunarity']=undefined,this['_brightEffectsGodrayHorzAngle']=undefined,this[_0x4493d5(0x15d)]=undefined;if($dataMap){var _0x458b69=$dataMap[_0x4493d5(0x222)]||'';if(_0x458b69[_0x4493d5(0x1a2)](/<GODRAY>/i))_0x2b75f0=!![];else _0x458b69[_0x4493d5(0x1a2)](/<NO GODRAY>/i)&&(_0x2b75f0=![]);_0x458b69[_0x4493d5(0x1a2)](/<GODRAY SPEED: (.*)>/i)&&(_0x275b39=Number(RegExp['$1'])||0x0),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY GAIN: (.*)>/i)&&(_0x2c7eb2=Number(RegExp['$1'])||0x0),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY LACUNARITY: (.*)>/i)&&(_0x223070=Number(RegExp['$1'])||0x0),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY ANGLE: (.*)>/i)&&(_0x19f82b=Number(RegExp['$1'])||0x0),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY (?:HORZ|HORIZONTAL) SPEED: (.*) TO (.*)>/i)&&(this[_0x4493d5(0x185)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4493d5(0x216)]=undefined),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY (?:VERT|VERTICAL) SPEED: (.*) TO (.*)>/i)&&(this[_0x4493d5(0x185)]=undefined,this[_0x4493d5(0x216)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY (?:HORZ|HORIZONTAL) GAIN: (.*) TO (.*)>/i)&&(this[_0x4493d5(0x1d1)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4493d5(0x1af)]=undefined),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY (?:VERT|VERTICAL) GAIN: (.*) TO (.*)>/i)&&(this[_0x4493d5(0x1d1)]=undefined,this['_brightEffectsGodrayVertGain']=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x458b69['match'](/<GODRAY (?:HORZ|HORIZONTAL) LACUNARITY: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzLacunarity']=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x4493d5(0x21c)]=undefined),_0x458b69[_0x4493d5(0x1a2)](/<GODRAY (?:VERT|VERTICAL) LACUNARITY: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzLacunarity']=undefined,this['_brightEffectsGodrayVertLacunarity']=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x458b69['match'](/<GODRAY (?:HORZ|HORIZONTAL) ANGLE: (.*) TO (.*)>/i)&&(this['_brightEffectsGodrayHorzAngle']=[Number(RegExp['$1']),Number(RegExp['$2'])],this['_brightEffectsGodrayVertAngle']=undefined),_0x458b69['match'](/<GODRAY (?:VERT|VERTICAL) ANGLE: (.*) TO (.*)>/i)&&(this[_0x4493d5(0x1a3)]=undefined,this[_0x4493d5(0x15d)]=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen[_0x4493d5(0x163)](_0x2b75f0,_0x275b39,_0x2c7eb2,_0x223070,_0x19f82b,0x0);},Game_Map[_0x5511ce(0x1cf)]['setupBrightEffectsColorAdjustFilter']=function(){var _0x2bf988=_0x5511ce;const _0x3c5531=VisuMZ[_0x2bf988(0x1fd)][_0x2bf988(0x1c0)][_0x2bf988(0x176)];var _0x51f20f=_0x3c5531[_0x2bf988(0x179)],_0x4edfe9=_0x3c5531[_0x2bf988(0x201)],_0x18d808=_0x3c5531[_0x2bf988(0x187)];this['_brightEffectsColorAdjustHorzBrightness']=undefined,this[_0x2bf988(0x198)]=undefined,this['_brightEffectsColorAdjustHorzContrast']=undefined,this[_0x2bf988(0x204)]=undefined,this[_0x2bf988(0x18c)]=undefined,this[_0x2bf988(0x1ee)]=undefined;if($dataMap){var _0x3cf526=$dataMap['note']||'';if(_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST BRIGHTNESS: (.*)>/i))var _0x51f20f=Number(RegExp['$1'])||0x0;if(_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST CONTRAST: (.*)>/i))var _0x4edfe9=Number(RegExp['$1'])||0x0;if(_0x3cf526['match'](/<COLOR ADJUST SATURATE: (.*)>/i))var _0x18d808=Number(RegExp['$1'])||0x0;_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST (?:HORZ|HORIZONTAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this[_0x2bf988(0x164)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x2bf988(0x198)]=undefined),_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST (?:VERT|VERTICAL) BRIGHTNESS: (.*) TO (.*)>/i)&&(this['_brightEffectsColorAdjustHorzBrightness']=undefined,this[_0x2bf988(0x198)]=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x3cf526['match'](/<COLOR ADJUST (?:HORZ|HORIZONTAL) CONTRAST: (.*) TO (.*)>/i)&&(this[_0x2bf988(0x1d5)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x2bf988(0x204)]=undefined),_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST (?:VERT|VERTICAL) CONTRAST: (.*) TO (.*)>/i)&&(this[_0x2bf988(0x1d5)]=undefined,this['_brightEffectsColorAdjustVertContrast']=[Number(RegExp['$1']),Number(RegExp['$2'])]),_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST (?:HORZ|HORIZONTAL) SATURATE: (.*) TO (.*)>/i)&&(this[_0x2bf988(0x18c)]=[Number(RegExp['$1']),Number(RegExp['$2'])],this[_0x2bf988(0x1ee)]=undefined),_0x3cf526[_0x2bf988(0x1a2)](/<COLOR ADJUST (?:VERT|VERTICAL) SATURATE: (.*) TO (.*)>/i)&&(this[_0x2bf988(0x18c)]=undefined,this[_0x2bf988(0x1ee)]=[Number(RegExp['$1']),Number(RegExp['$2'])]);}$gameScreen['setBrightEffectsColorAdjustSettings'](_0x51f20f,_0x4edfe9,_0x18d808,0x0);},Game_Map['prototype']['setupBrightEffectsTiltShiftFilter']=function(){var _0x3efb26=_0x5511ce;const _0x109575=VisuMZ['BrightEffects'][_0x3efb26(0x1c0)]['MapTiltShift'];let _0x4e87c8=_0x109575[_0x3efb26(0x1fa)],_0x7b010b=_0x109575[_0x3efb26(0x1ca)];if($dataMap){const _0x2c1589=$dataMap[_0x3efb26(0x222)]||'';_0x2c1589['match'](/<(?:TILTSHIFT|TILT SHIFT) PIXEL BLUR:[ ](\d+)>/i)&&(_0x4e87c8=Number(RegExp['$1'])),_0x2c1589[_0x3efb26(0x1a2)](/<(?:TILTSHIFT|TILT SHIFT) (?:GRAD|GRADIENT) BLUR:[ ](\d+)>/i)&&(_0x7b010b=Number(RegExp['$1']));}$gameScreen[_0x3efb26(0x1fc)](_0x4e87c8,_0x7b010b,0x0);},Game_Map[_0x5511ce(0x1cf)]['setupBrightEffectsBlurFilter']=function(){let _0x226729=0x0;if($dataMap){const _0x50bff2=$dataMap['note']||'';_0x50bff2['match'](/<BLUR:[ ](.*?)>/i)&&(_0x226729=Number(RegExp['$1']));}$gameScreen['setBrightEffectsBlurSettings'](_0x226729,0x0);},VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x16c)]=Game_CharacterBase[_0x5511ce(0x1cf)][_0x5511ce(0x1f2)],Game_CharacterBase[_0x5511ce(0x1cf)]['locate']=function(_0x1432d5,_0x330888){var _0x2cd5e9=_0x5511ce;VisuMZ['BrightEffects'][_0x2cd5e9(0x16c)]['call'](this,_0x1432d5,_0x330888),this===$gamePlayer&&this['updateMapBrightEffects']();},VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x1b3)]=Game_Player[_0x5511ce(0x1cf)][_0x5511ce(0x1d2)],Game_Player[_0x5511ce(0x1cf)][_0x5511ce(0x1d2)]=function(_0x251036){var _0x43844d=_0x5511ce;VisuMZ[_0x43844d(0x1fd)][_0x43844d(0x1b3)][_0x43844d(0x1dc)](this,_0x251036),this[_0x43844d(0x1b8)]();},Game_Player[_0x5511ce(0x1cf)]['updateMapBrightEffects']=function(){var _0x41401b=_0x5511ce;if(ConfigManager[_0x41401b(0x170)]===![])return;this['updateMapBrightEffectsAdvBloom'](),this['updateMapBrightEffectsGodray'](),this[_0x41401b(0x215)]();},Game_Player[_0x5511ce(0x1cf)][_0x5511ce(0x197)]=function(){var _0x1d9715=_0x5511ce,_0x1ac6ad=$gameScreen[_0x1d9715(0x1aa)](),_0x43d14e=_0x1ac6ad[_0x1d9715(0x189)],_0x4d70cc=_0x1ac6ad['brightness'],_0xceeca=_0x1ac6ad[_0x1d9715(0x1ef)];if($gameMap[_0x1d9715(0x18d)]!==undefined)var _0x451a88=$gameMap[_0x1d9715(0x18d)][0x0],_0x1da883=$gameMap[_0x1d9715(0x18d)][0x1]-_0x451a88,_0x5dc844=$gamePlayer[_0x1d9715(0x210)]/$gameMap['width'](),_0x43d14e=_0x451a88+_0x1da883*_0x5dc844;else{if($gameMap[_0x1d9715(0x1d8)]!==undefined)var _0x451a88=$gameMap['_brightEffectsBloomVertScale'][0x0],_0x1da883=$gameMap['_brightEffectsBloomVertScale'][0x1]-_0x451a88,_0x5dc844=$gamePlayer['_realY']/$gameMap[_0x1d9715(0x171)](),_0x43d14e=_0x451a88+_0x1da883*_0x5dc844;}if($gameMap[_0x1d9715(0x18a)]!==undefined)var _0x451a88=$gameMap[_0x1d9715(0x18a)][0x0],_0x1da883=$gameMap[_0x1d9715(0x18a)][0x1]-_0x451a88,_0x5dc844=$gamePlayer[_0x1d9715(0x210)]/$gameMap[_0x1d9715(0x1ab)](),_0x4d70cc=_0x451a88+_0x1da883*_0x5dc844;else{if($gameMap[_0x1d9715(0x209)]!==undefined)var _0x451a88=$gameMap[_0x1d9715(0x209)][0x0],_0x1da883=$gameMap[_0x1d9715(0x209)][0x1]-_0x451a88,_0x5dc844=$gamePlayer[_0x1d9715(0x1da)]/$gameMap[_0x1d9715(0x171)](),_0x4d70cc=_0x451a88+_0x1da883*_0x5dc844;}if($gameMap[_0x1d9715(0x173)]!==undefined)var _0x451a88=$gameMap[_0x1d9715(0x173)][0x0],_0x1da883=$gameMap[_0x1d9715(0x173)][0x1]-_0x451a88,_0x5dc844=$gamePlayer['_realX']/$gameMap[_0x1d9715(0x1ab)](),_0xceeca=_0x451a88+_0x1da883*_0x5dc844;else{if($gameMap[_0x1d9715(0x1cc)]!==undefined)var _0x451a88=$gameMap[_0x1d9715(0x1cc)][0x0],_0x1da883=$gameMap[_0x1d9715(0x1cc)][0x1]-_0x451a88,_0x5dc844=$gamePlayer[_0x1d9715(0x1da)]/$gameMap[_0x1d9715(0x171)](),_0xceeca=_0x451a88+_0x1da883*_0x5dc844;}$gameScreen['setBrightEffectsAdvBloomSettings'](_0x43d14e,_0x4d70cc,_0xceeca,_0x1ac6ad[_0x1d9715(0x207)]);},Game_Player[_0x5511ce(0x1cf)]['updateMapBrightEffectsGodray']=function(){var _0x48a061=_0x5511ce,_0x49c701=$gameScreen[_0x48a061(0x1c5)](),_0xf644ba=_0x49c701['visible'],_0x23cdd5=_0x49c701[_0x48a061(0x174)],_0x4cfa70=_0x49c701[_0x48a061(0x20c)],_0x132bc3=_0x49c701['lacunarity'],_0x5685eb=_0x49c701[_0x48a061(0x1d3)];if($gameMap[_0x48a061(0x185)]!==undefined)var _0x1f5efc=$gameMap['_brightEffectsGodrayHorzSpeed'][0x0],_0x43e946=$gameMap[_0x48a061(0x185)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x210)]/$gameMap[_0x48a061(0x1ab)](),_0x23cdd5=_0x1f5efc+_0x43e946*_0x5c0eb1;else{if($gameMap[_0x48a061(0x1d8)]!==undefined)var _0x1f5efc=$gameMap['_brightEffectsGodrayVertSpeed'][0x0],_0x43e946=$gameMap[_0x48a061(0x216)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer['_realY']/$gameMap[_0x48a061(0x171)](),_0x23cdd5=_0x1f5efc+_0x43e946*_0x5c0eb1;}if($gameMap[_0x48a061(0x1d1)]!==undefined)var _0x1f5efc=$gameMap[_0x48a061(0x1d1)][0x0],_0x43e946=$gameMap[_0x48a061(0x1d1)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x210)]/$gameMap[_0x48a061(0x1ab)](),_0x4cfa70=_0x1f5efc+_0x43e946*_0x5c0eb1;else{if($gameMap['_brightEffectsGodrayVertGain']!==undefined)var _0x1f5efc=$gameMap[_0x48a061(0x1af)][0x0],_0x43e946=$gameMap[_0x48a061(0x1af)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x1da)]/$gameMap[_0x48a061(0x171)](),_0x4cfa70=_0x1f5efc+_0x43e946*_0x5c0eb1;}if($gameMap[_0x48a061(0x16d)]!==undefined)var _0x1f5efc=$gameMap[_0x48a061(0x16d)][0x0],_0x43e946=$gameMap[_0x48a061(0x16d)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x210)]/$gameMap[_0x48a061(0x1ab)](),_0x132bc3=_0x1f5efc+_0x43e946*_0x5c0eb1;else{if($gameMap['_brightEffectsGodrayVertLacunarity']!==undefined)var _0x1f5efc=$gameMap[_0x48a061(0x21c)][0x0],_0x43e946=$gameMap[_0x48a061(0x21c)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x1da)]/$gameMap[_0x48a061(0x171)](),_0x132bc3=_0x1f5efc+_0x43e946*_0x5c0eb1;}if($gameMap[_0x48a061(0x1a3)]!==undefined)var _0x1f5efc=$gameMap[_0x48a061(0x1a3)][0x0],_0x43e946=$gameMap[_0x48a061(0x1a3)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x210)]/$gameMap[_0x48a061(0x1ab)](),_0x5685eb=_0x1f5efc+_0x43e946*_0x5c0eb1;else{if($gameMap[_0x48a061(0x15d)]!==undefined)var _0x1f5efc=$gameMap['_brightEffectsGodrayVertAngle'][0x0],_0x43e946=$gameMap[_0x48a061(0x15d)][0x1]-_0x1f5efc,_0x5c0eb1=$gamePlayer[_0x48a061(0x1da)]/$gameMap[_0x48a061(0x171)](),_0x5685eb=_0x1f5efc+_0x43e946*_0x5c0eb1;}$gameScreen[_0x48a061(0x163)](_0xf644ba,_0x23cdd5,_0x4cfa70,_0x132bc3,_0x5685eb,_0x49c701[_0x48a061(0x207)]);},Game_Player[_0x5511ce(0x1cf)][_0x5511ce(0x215)]=function(){var _0x351aed=_0x5511ce,_0x34cf10=$gameScreen[_0x351aed(0x1c3)](),_0x46cc66=_0x34cf10[_0x351aed(0x1d9)],_0x51bd22=_0x34cf10[_0x351aed(0x1ae)],_0x5bb85e=_0x34cf10[_0x351aed(0x19c)];if($gameMap[_0x351aed(0x164)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x164)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x164)][0x1]-_0x1c8842,_0x11c164=$gamePlayer['_realX']/$gameMap[_0x351aed(0x1ab)](),_0x46cc66=_0x1c8842+_0x5d7eea*_0x11c164;else{if($gameMap[_0x351aed(0x198)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x198)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x198)][0x1]-_0x1c8842,_0x11c164=$gamePlayer[_0x351aed(0x1da)]/$gameMap[_0x351aed(0x171)](),_0x46cc66=_0x1c8842+_0x5d7eea*_0x11c164;}if($gameMap[_0x351aed(0x1d5)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x1d5)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x1d5)][0x1]-_0x1c8842,_0x11c164=$gamePlayer[_0x351aed(0x210)]/$gameMap['width'](),_0x51bd22=_0x1c8842+_0x5d7eea*_0x11c164;else{if($gameMap[_0x351aed(0x204)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x204)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x204)][0x1]-_0x1c8842,_0x11c164=$gamePlayer[_0x351aed(0x1da)]/$gameMap[_0x351aed(0x171)](),_0x51bd22=_0x1c8842+_0x5d7eea*_0x11c164;}if($gameMap[_0x351aed(0x18c)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x18c)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x18c)][0x1]-_0x1c8842,_0x11c164=$gamePlayer['_realX']/$gameMap['width'](),_0x5bb85e=_0x1c8842+_0x5d7eea*_0x11c164;else{if($gameMap[_0x351aed(0x1ee)]!==undefined)var _0x1c8842=$gameMap[_0x351aed(0x1ee)][0x0],_0x5d7eea=$gameMap[_0x351aed(0x1ee)][0x1]-_0x1c8842,_0x11c164=$gamePlayer[_0x351aed(0x1da)]/$gameMap[_0x351aed(0x171)](),_0x5bb85e=_0x1c8842+_0x5d7eea*_0x11c164;}$gameScreen[_0x351aed(0x1e0)](_0x46cc66,_0x51bd22,_0x5bb85e,_0x34cf10['duration']);},Spriteset_Base[_0x5511ce(0x1fe)]=![],Spriteset_Map['BRIGHT_EFFECTS_BASE_ONLY']=VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x1c0)][_0x5511ce(0x196)],Spriteset_Battle[_0x5511ce(0x1fe)]=VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x1c0)][_0x5511ce(0x1b0)],Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1a4)]=function(){var _0x5eab99=_0x5511ce;return Spriteset_Base[_0x5eab99(0x1fe)];},Spriteset_Map[_0x5511ce(0x1cf)][_0x5511ce(0x1a4)]=function(){var _0xb0cc67=_0x5511ce;return Spriteset_Map[_0xb0cc67(0x1fe)];},Spriteset_Battle[_0x5511ce(0x1cf)][_0x5511ce(0x1a4)]=function(){return Spriteset_Battle['BRIGHT_EFFECTS_BASE_ONLY'];},VisuMZ[_0x5511ce(0x1fd)][_0x5511ce(0x20f)]=Spriteset_Base[_0x5511ce(0x1cf)]['createOverallFilters'],Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1ac)]=function(){var _0x4e67de=_0x5511ce;VisuMZ[_0x4e67de(0x1fd)]['Spriteset_Base_createOverallFilters']['call'](this),this[_0x4e67de(0x1c4)]();},VisuMZ['BrightEffects']['Spriteset_Base_update']=Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1d2)],Spriteset_Base[_0x5511ce(0x1cf)]['update']=function(){var _0xebf658=_0x5511ce;VisuMZ[_0xebf658(0x1fd)][_0xebf658(0x211)][_0xebf658(0x1dc)](this),this['updateBrightEffectsFilters']();},Spriteset_Map['prototype'][_0x5511ce(0x1e9)]=function(){var _0x242f84=_0x5511ce;const _0x5b41b7=$gameScreen['zoomScale']();let _0x274b4b=0x0;if(Imported[_0x242f84(0x1dd)]&&$gameScreen[_0x242f84(0x200)]()[_0x242f84(0x1bd)])_0x274b4b=Graphics['height']/0x2,_0x274b4b-=$gameMap[_0x242f84(0x1d4)]()*0.5*_0x5b41b7;else{const _0x1f4b9f=Imported[_0x242f84(0x1dd)]?$gameScreen['mapCameraFocusTarget'](!![]):$gamePlayer,_0x4d68b4=this[_0x242f84(0x15e)](_0x1f4b9f);_0x4d68b4&&(_0x274b4b=_0x1f4b9f[_0x242f84(0x1b5)]()*_0x5b41b7,_0x274b4b-=_0x4d68b4[_0x242f84(0x171)]*0.5,_0x274b4b-=_0x1f4b9f['shiftY']()*_0x5b41b7*0.5);}return _0x274b4b;},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1e9)]=function(){return Graphics['height']/0x2;},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1c4)]=function(){var _0x2f4c96=_0x5511ce;if(ConfigManager[_0x2f4c96(0x170)]===![])return;this['filters']=this[_0x2f4c96(0x214)]||[],this['createBrightEffectsAdvBloomFilter'](),this[_0x2f4c96(0x1f0)](),this[_0x2f4c96(0x224)](),this['createBrightEffectsTiltShiftFilter'](),this[_0x2f4c96(0x1a7)](),this[_0x2f4c96(0x1b4)]();},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1b4)]=function(){var _0x20f6d6=_0x5511ce;this[_0x20f6d6(0x1e5)](),this[_0x20f6d6(0x1a1)](),this['updateBrightEffectsColorAdjustFilter'](),this['updateBrightEffectsTiltShiftFilter'](),this[_0x20f6d6(0x1e8)]();},Spriteset_Base['prototype']['createBrightEffectsAdvBloomFilter']=function(){var _0x75a0b9=_0x5511ce;if(!PIXI['filters'][_0x75a0b9(0x1f5)])return;this[_0x75a0b9(0x19b)]=new PIXI[(_0x75a0b9(0x214))][(_0x75a0b9(0x1f5))]();this[_0x75a0b9(0x1a4)]()?this[_0x75a0b9(0x167)]['filters'][_0x75a0b9(0x21b)](this[_0x75a0b9(0x19b)]):this[_0x75a0b9(0x214)]['push'](this['_BrightEffectsAdvBloomFilter']);var _0x55c884=$gameScreen[_0x75a0b9(0x1aa)]();_0x55c884&&_0x55c884[_0x75a0b9(0x207)]>0x0&&(this[_0x75a0b9(0x19b)][_0x75a0b9(0x189)]=_0x55c884[_0x75a0b9(0x189)],this[_0x75a0b9(0x19b)][_0x75a0b9(0x1d9)]=_0x55c884[_0x75a0b9(0x1d9)],this['_BrightEffectsAdvBloomFilter'][_0x75a0b9(0x1ef)]=_0x55c884[_0x75a0b9(0x1ef)]);},Spriteset_Base[_0x5511ce(0x1cf)]['updateBrightEffectsAdvBloomFilter']=function(){var _0x1fd462=_0x5511ce;if(!!this[_0x1fd462(0x19b)]){var _0x8e3fe1=$gameScreen['getBrightEffectsAdvBloomSettings'](),_0x3e64e7=_0x8e3fe1[_0x1fd462(0x207)];_0x3e64e7<=0x0?(this[_0x1fd462(0x19b)][_0x1fd462(0x189)]=_0x8e3fe1['bloomScale'],this['_BrightEffectsAdvBloomFilter'][_0x1fd462(0x1d9)]=_0x8e3fe1[_0x1fd462(0x1d9)],this['_BrightEffectsAdvBloomFilter']['threshold']=_0x8e3fe1[_0x1fd462(0x1ef)]):(_0x8e3fe1['duration']--,this[_0x1fd462(0x19b)][_0x1fd462(0x189)]=(this[_0x1fd462(0x19b)]['bloomScale']*(_0x3e64e7-0x1)+_0x8e3fe1[_0x1fd462(0x189)])/_0x3e64e7,this['_BrightEffectsAdvBloomFilter'][_0x1fd462(0x1d9)]=(this['_BrightEffectsAdvBloomFilter'][_0x1fd462(0x1d9)]*(_0x3e64e7-0x1)+_0x8e3fe1['brightness'])/_0x3e64e7,this[_0x1fd462(0x19b)][_0x1fd462(0x1ef)]=(this[_0x1fd462(0x19b)][_0x1fd462(0x1ef)]*(_0x3e64e7-0x1)+_0x8e3fe1['threshold'])/_0x3e64e7);}},Spriteset_Base[_0x5511ce(0x1cf)]['createBrightEffectsGodrayFilter']=function(){var _0x219d5b=_0x5511ce;if(!PIXI[_0x219d5b(0x214)][_0x219d5b(0x20e)])return;this['_BrightEffectsGodrayFilter']=new PIXI['filters']['GodrayFilter'](),this[_0x219d5b(0x1ba)]['enabled']=![],this[_0x219d5b(0x1ba)][_0x219d5b(0x225)]=0x0;this[_0x219d5b(0x1a4)]()?this[_0x219d5b(0x167)][_0x219d5b(0x214)]['push'](this[_0x219d5b(0x1ba)]):this[_0x219d5b(0x214)][_0x219d5b(0x21b)](this[_0x219d5b(0x1ba)]);var _0x4187d2=$gameScreen[_0x219d5b(0x1c5)]();_0x4187d2&&_0x4187d2[_0x219d5b(0x207)]>0x0&&(this[_0x219d5b(0x1ba)][_0x219d5b(0x174)]=_0x4187d2[_0x219d5b(0x174)],this['_BrightEffectsGodrayFilter']['gain']=_0x4187d2[_0x219d5b(0x20c)],this[_0x219d5b(0x1ba)][_0x219d5b(0x1bc)]=_0x4187d2[_0x219d5b(0x1bc)],this['_BrightEffectsGodrayFilter'][_0x219d5b(0x1d3)]=_0x4187d2[_0x219d5b(0x1d3)]);},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1a1)]=function(){var _0x446eef=_0x5511ce;if(!!this[_0x446eef(0x1ba)]){var _0x2386a7=$gameScreen[_0x446eef(0x1c5)](),_0x4060ab=_0x2386a7[_0x446eef(0x207)];_0x4060ab<=0x0?(this[_0x446eef(0x1ba)]['speed']=_0x2386a7['speed'],this['_BrightEffectsGodrayFilter'][_0x446eef(0x20c)]=_0x2386a7[_0x446eef(0x20c)],this[_0x446eef(0x1ba)]['lacunarity']=_0x2386a7[_0x446eef(0x1bc)],this['_BrightEffectsGodrayFilter'][_0x446eef(0x1d3)]=_0x2386a7[_0x446eef(0x1d3)]):(_0x2386a7[_0x446eef(0x207)]--,this[_0x446eef(0x1ba)][_0x446eef(0x174)]=(this[_0x446eef(0x1ba)][_0x446eef(0x174)]*(_0x4060ab-0x1)+_0x2386a7[_0x446eef(0x174)])/_0x4060ab,this[_0x446eef(0x1ba)][_0x446eef(0x20c)]=(this[_0x446eef(0x1ba)][_0x446eef(0x20c)]*(_0x4060ab-0x1)+_0x2386a7['gain'])/_0x4060ab,this[_0x446eef(0x1ba)][_0x446eef(0x1bc)]=(this[_0x446eef(0x1ba)][_0x446eef(0x1bc)]*(_0x4060ab-0x1)+_0x2386a7[_0x446eef(0x1bc)])/_0x4060ab,this[_0x446eef(0x1ba)][_0x446eef(0x1d3)]=(this[_0x446eef(0x1ba)][_0x446eef(0x1d3)]*(_0x4060ab-0x1)+_0x2386a7[_0x446eef(0x1d3)])/_0x4060ab),this[_0x446eef(0x1ba)][_0x446eef(0x225)]+=this[_0x446eef(0x1ba)][_0x446eef(0x174)],this[_0x446eef(0x1ba)]['enabled']=_0x2386a7[_0x446eef(0x20d)];}},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x224)]=function(){var _0x39a08b=_0x5511ce;if(!PIXI[_0x39a08b(0x214)]['ColorMatrixFilter'])return;this['_BrightEffectsColorAdjustFilter']=new PIXI['filters'][(_0x39a08b(0x166))]();this[_0x39a08b(0x1a4)]()?this[_0x39a08b(0x167)][_0x39a08b(0x214)][_0x39a08b(0x21b)](this[_0x39a08b(0x1ff)]):this['filters']['push'](this[_0x39a08b(0x1ff)]);var _0xa66894=$gameScreen[_0x39a08b(0x1c3)]();_0xa66894&&_0xa66894[_0x39a08b(0x207)]>0x0&&(this['_BrightEffectsColorAdjustFilter'][_0x39a08b(0x205)]=_0xa66894[_0x39a08b(0x1d9)],this[_0x39a08b(0x1ff)][_0x39a08b(0x19d)]=_0xa66894[_0x39a08b(0x1ae)],this[_0x39a08b(0x1ff)][_0x39a08b(0x1c1)]=_0xa66894[_0x39a08b(0x19c)]);},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x184)]=function(){var _0x56b53a=_0x5511ce;if(!!this[_0x56b53a(0x1ff)]){var _0x4e9cf5=$gameScreen[_0x56b53a(0x1c3)](),_0x154435=_0x4e9cf5[_0x56b53a(0x207)];_0x154435<=0x0?(this['_BrightEffectsColorAdjustFilter'][_0x56b53a(0x205)]=_0x4e9cf5[_0x56b53a(0x1d9)],this['_BrightEffectsColorAdjustFilter'][_0x56b53a(0x19d)]=_0x4e9cf5[_0x56b53a(0x1ae)],this[_0x56b53a(0x1ff)][_0x56b53a(0x1c1)]=_0x4e9cf5[_0x56b53a(0x19c)]):(_0x4e9cf5[_0x56b53a(0x207)]--,this[_0x56b53a(0x1ff)][_0x56b53a(0x205)]=(this[_0x56b53a(0x1ff)][_0x56b53a(0x205)]*(_0x154435-0x1)+_0x4e9cf5[_0x56b53a(0x1d9)])/_0x154435,this[_0x56b53a(0x1ff)][_0x56b53a(0x19d)]=(this[_0x56b53a(0x1ff)][_0x56b53a(0x19d)]*(_0x154435-0x1)+_0x4e9cf5['contrast'])/_0x154435,this[_0x56b53a(0x1ff)]['currentSaturate']=(this['_BrightEffectsColorAdjustFilter'][_0x56b53a(0x1c1)]*(_0x154435-0x1)+_0x4e9cf5['saturate'])/_0x154435),this[_0x56b53a(0x1ff)][_0x56b53a(0x1d9)](this[_0x56b53a(0x1ff)][_0x56b53a(0x205)]),this['_BrightEffectsColorAdjustFilter'][_0x56b53a(0x1ae)](this[_0x56b53a(0x1ff)]['currentContrast'],!![]),this['_BrightEffectsColorAdjustFilter']['saturate'](this[_0x56b53a(0x1ff)][_0x56b53a(0x1c1)],!![]);}},Spriteset_Base[_0x5511ce(0x1bf)]=null,Spriteset_Base['TILT_SHIFT_BATTLE_FILTER']=null,Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x20a)]=function(){var _0x9e1a3c=_0x5511ce;if(!PIXI[_0x9e1a3c(0x214)]['TiltShiftFilter'])return;const _0x28a006=this[_0x9e1a3c(0x1a8)]();this[_0x9e1a3c(0x165)]=_0x28a006;this['brightEffectsBaseOnly']()?this[_0x9e1a3c(0x167)][_0x9e1a3c(0x214)][_0x9e1a3c(0x21b)](_0x28a006):this[_0x9e1a3c(0x214)][_0x9e1a3c(0x21b)](_0x28a006);var _0x3713ab=$gameScreen['getBrightEffectsTiltShiftSettings']();_0x3713ab&&(_0x3713ab[_0x9e1a3c(0x207)]>0x0&&(_0x28a006[_0x9e1a3c(0x1cb)]=_0x3713ab[_0x9e1a3c(0x194)],_0x28a006[_0x9e1a3c(0x1e4)]=_0x3713ab[_0x9e1a3c(0x180)])),this[_0x9e1a3c(0x203)](!![]);},Spriteset_Base[_0x5511ce(0x1cf)]['getTiltShiftFilter']=function(){var _0x257ed4=_0x5511ce;return SceneManager['isSceneBattle']()?Spriteset_Base[_0x257ed4(0x221)]:Spriteset_Base[_0x257ed4(0x1bf)];},VisuMZ['BrightEffects'][_0x5511ce(0x1a0)]=Scene_Boot[_0x5511ce(0x1cf)][_0x5511ce(0x1f9)],Scene_Boot['prototype']['onDatabaseLoaded']=function(){var _0x333335=_0x5511ce;VisuMZ[_0x333335(0x1fd)][_0x333335(0x1a0)][_0x333335(0x1dc)](this);if(!PIXI[_0x333335(0x214)][_0x333335(0x213)])return;Spriteset_Base[_0x333335(0x1bf)]=new PIXI['filters']['TiltShiftFilter'](),Spriteset_Base[_0x333335(0x221)]=new PIXI[(_0x333335(0x214))][(_0x333335(0x213))]();},Spriteset_Battle[_0x5511ce(0x1cf)]['getTiltShiftFilter']=function(){var _0x119bfc=_0x5511ce;return new PIXI[(_0x119bfc(0x214))][(_0x119bfc(0x213))]();},Spriteset_Base['prototype'][_0x5511ce(0x203)]=function(_0x16237f){var _0x5bdbeb=_0x5511ce;if(!this[_0x5bdbeb(0x165)])return;const _0x40f39c=this[_0x5bdbeb(0x1e9)]()+0.5;this[_0x5bdbeb(0x18b)](_0x40f39c,_0x16237f),this[_0x5bdbeb(0x1a9)]();},Spriteset_Base['prototype']['setMapEnhanceTiltShiftFilterY']=function(_0x301d9d,_0x216667){var _0x69b26e=_0x5511ce;let _0x33a667=_0x216667?0xfa0:0x8;if(this['_BrightEffectsTiltShiftFilter']['start']['y']>_0x301d9d)this['_BrightEffectsTiltShiftFilter'][_0x69b26e(0x1b2)]={'x':0x0,'y':Math[_0x69b26e(0x1a5)](this[_0x69b26e(0x165)][_0x69b26e(0x1b2)]['y']-_0x33a667,_0x301d9d)},this[_0x69b26e(0x165)][_0x69b26e(0x1d6)]={'x':0x258,'y':Math[_0x69b26e(0x1a5)](this[_0x69b26e(0x165)][_0x69b26e(0x1d6)]['y']-_0x33a667,_0x301d9d)};else this[_0x69b26e(0x165)][_0x69b26e(0x1b2)]['y']<_0x301d9d&&(this[_0x69b26e(0x165)]['start']={'x':0x0,'y':Math[_0x69b26e(0x177)](this['_BrightEffectsTiltShiftFilter']['start']['y']+_0x33a667,_0x301d9d)},this[_0x69b26e(0x165)]['end']={'x':0x258,'y':Math[_0x69b26e(0x177)](this[_0x69b26e(0x165)][_0x69b26e(0x1d6)]['y']+_0x33a667,_0x301d9d)});},Spriteset_Base[_0x5511ce(0x1cf)]['updateBrightEffectsTiltShiftFilterProperties']=function(){var _0x5c2f0b=_0x5511ce;const _0x1ec694=this[_0x5c2f0b(0x165)];var _0x30adcc=$gameScreen[_0x5c2f0b(0x1b9)](),_0xafaf70=_0x30adcc[_0x5c2f0b(0x207)];_0xafaf70<=0x0?(_0x1ec694[_0x5c2f0b(0x1cb)]=_0x30adcc[_0x5c2f0b(0x194)],_0x1ec694[_0x5c2f0b(0x1e4)]=_0x30adcc[_0x5c2f0b(0x180)]):(_0x30adcc[_0x5c2f0b(0x207)]--,_0x1ec694[_0x5c2f0b(0x1cb)]=(_0x1ec694[_0x5c2f0b(0x1cb)]*(_0xafaf70-0x1)+_0x30adcc[_0x5c2f0b(0x194)])/_0xafaf70,_0x1ec694[_0x5c2f0b(0x1e4)]=(_0x1ec694['currentGradientBlur']*(_0xafaf70-0x1)+_0x30adcc[_0x5c2f0b(0x180)])/_0xafaf70),_0x1ec694[_0x5c2f0b(0x1f4)]=_0x1ec694[_0x5c2f0b(0x1cb)],_0x1ec694['gradientBlur']=_0x1ec694[_0x5c2f0b(0x1e4)];},Spriteset_Base[_0x5511ce(0x1cf)]['createBrightEffectsBlurFilter']=function(){var _0x231989=_0x5511ce;const _0x409cd5=new PIXI[(_0x231989(0x214))][(_0x231989(0x21e))]();this['_BrightEffectsBlurFilter']=_0x409cd5;this[_0x231989(0x1a4)]()?this['_baseSprite'][_0x231989(0x214)][_0x231989(0x21b)](_0x409cd5):this[_0x231989(0x214)][_0x231989(0x21b)](_0x409cd5);var _0x4b02b5=$gameScreen['getBrightEffectsBlurSettings']();_0x4b02b5&&_0x4b02b5[_0x231989(0x207)]>0x0&&(_0x409cd5['currentBlur']=_0x4b02b5[_0x231989(0x1f4)]);},Spriteset_Base[_0x5511ce(0x1cf)][_0x5511ce(0x1e8)]=function(){var _0x10332d=_0x5511ce;if(!!this[_0x10332d(0x181)]){var _0x21caab=$gameScreen['getBrightEffectsBlurSettings'](),_0x40dd92=_0x21caab[_0x10332d(0x207)];_0x40dd92<=0x0?this['_BrightEffectsBlurFilter']['currentBlur']=_0x21caab[_0x10332d(0x1f4)]:(_0x21caab[_0x10332d(0x207)]--,this[_0x10332d(0x181)][_0x10332d(0x21a)]=(this['_BrightEffectsBlurFilter'][_0x10332d(0x21a)]*(_0x40dd92-0x1)+_0x21caab[_0x10332d(0x1f4)])/_0x40dd92),this[_0x10332d(0x181)][_0x10332d(0x1f4)]=this[_0x10332d(0x181)][_0x10332d(0x21a)];}};
