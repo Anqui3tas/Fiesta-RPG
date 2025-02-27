@@ -1,0 +1,230 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 /*:\
+ * @target MZ\
+ * @plugindesc A simple character creator that uses assets from the generator folder and works alongside VisuStella plugins. (Ver 1.0)\
+ * @author YourName\
+ *\
+ * @param FaceList\
+ * @type string[]\
+ * @desc Array of face image names (without extension). Place images in generator/face/\
+ * @default ["face_1", "face_2", "face_3"]\
+ *\
+ * @param HairList\
+ * @type string[]\
+ * @desc Array of hair image names (without extension). Place images in generator/hair/\
+ * @default ["hair_1", "hair_2", "hair_3"]\
+ *\
+ * @command CallSimpleCharacterCreator\
+ * @text Call Simple Character Creator\
+ * @desc Opens the simple character creator scene.\
+ *\
+ * @arg actorId\
+ * @text Actor ID\
+ * @desc The actor ID to use for character creation.\
+ * @type actor\
+ * @default 1\
+ *\
+ * @help\
+ * This plugin creates a simple character creation scene.\
+ *\
+ * Plugin Command:\
+ *   CallSimpleCharacterCreator actorId: <actor id>\
+ *\
+ * When called, the scene will allow you to choose a face and hair part.\
+ * Upon confirmation, the actor\'92s character graphic is set to a composite image.\
+ *\
+ * The composite filename is in the format:\
+ *   $SimpleGene|<face>|<hair>\
+ *\
+ * The plugin overrides ImageManager.loadCharacter to build the composite image.\
+ *\
+ * Place your image assets in the following folders (relative to your project folder):\
+ *   generator/face/ (e.g., face_1.png, face_2.png, \'85)\
+ *   generator/hair/ (e.g., hair_1.png, hair_2.png, \'85)\
+ *\
+ * Note: This is a simplified example. You can expand it with additional parts.\
+ */\
+\
+(() => \{\
+    "use strict";\
+    \
+    const pluginName = "SimpleCharacterCreator";\
+    const parameters = PluginManager.parameters(pluginName);\
+    const faceList = JSON.parse(parameters["FaceList"] || '["face_1","face_2","face_3"]');\
+    const hairList = JSON.parse(parameters["HairList"] || '["hair_1","hair_2","hair_3"]');\
+    \
+    // Register the plugin command so it appears in the Plugin Command list.\
+    PluginManager.registerCommand(pluginName, "CallSimpleCharacterCreator", args => \{\
+        const actorId = Number(args.actorId || 1);\
+        const actor = $gameActors.actor(actorId);\
+        if (actor) \{\
+            Scene_SimpleCharacterCreator.setActor(actor);\
+            SceneManager.push(Scene_SimpleCharacterCreator);\
+        \}\
+    \});\
+    \
+    // Override ImageManager.loadCharacter to handle composite filenames.\
+    const _ImageManager_loadCharacter = ImageManager.loadCharacter;\
+    ImageManager.loadCharacter = function(filename, hue) \{\
+        if (filename && filename.startsWith("$SimpleGene|")) \{\
+            // Format: $SimpleGene|faceName|hairName\
+            const parts = filename.split("|");\
+            const faceName = parts[1];\
+            const hairName = parts[2];\
+            // Create a composite bitmap (size: 144x192; adjust if needed)\
+            const bmp = new Bitmap(144, 192);\
+            const faceBmp = ImageManager.loadBitmap("generator/face/", faceName, 0, true);\
+            const hairBmp = ImageManager.loadBitmap("generator/hair/", hairName, 0, true);\
+            faceBmp.addLoadListener(() => \{\
+                // Draw the face image at (0, 0)\
+                bmp.blt(faceBmp, 0, 0, faceBmp.width, faceBmp.height, 0, 0);\
+            \});\
+            hairBmp.addLoadListener(() => \{\
+                // Draw the hair image on top (adjust the x, y if needed)\
+                bmp.blt(hairBmp, 0, 0, hairBmp.width, hairBmp.height, 0, 0);\
+            \});\
+            return bmp;\
+        \}\
+        return _ImageManager_loadCharacter.call(this, filename, hue);\
+    \};\
+    \
+    //=============================================================================\
+    // Scene_SimpleCharacterCreator\
+    //=============================================================================\
+    class Scene_SimpleCharacterCreator extends Scene_MenuBase \{\
+        constructor() \{\
+            super();\
+            this._actor = null;\
+            this._faceIndex = 0;\
+            this._hairIndex = 0;\
+        \}\
+    \
+        static setActor(actor) \{\
+            Scene_SimpleCharacterCreator._actor = actor;\
+        \}\
+    \
+        get actor() \{\
+            return Scene_SimpleCharacterCreator._actor;\
+        \}\
+    \
+        create() \{\
+            super.create();\
+            this.createBackground();\
+            this.createPreviewSprite();\
+            this.createFaceWindow();\
+            this.createHairWindow();\
+            this.createCommandWindow();\
+        \}\
+    \
+        createBackground() \{\
+            // Create a simple black background.\
+            this._backgroundSprite = new Sprite();\
+            const bmp = new Bitmap(Graphics.width, Graphics.height);\
+            bmp.fillAll("black");\
+            this._backgroundSprite.bitmap = bmp;\
+            this.addChild(this._backgroundSprite);\
+        \}\
+    \
+        createPreviewSprite() \{\
+            // Sprite to display the composite preview.\
+            this._previewSprite = new Sprite();\
+            this._previewSprite.x = (Graphics.width - 144) / 2;\
+            this._previewSprite.y = 50;\
+            this.addChild(this._previewSprite);\
+            this.refreshPreview();\
+        \}\
+    \
+        refreshPreview() \{\
+            // Build the composite filename.\
+            const filename = "$SimpleGene|" + faceList[this._faceIndex] + "|" + hairList[this._hairIndex];\
+            this._previewSprite.bitmap = ImageManager.loadCharacter(filename);\
+        \}\
+    \
+        createFaceWindow() \{\
+            // Window for selecting a face.\
+            const rect = new Rectangle(0, 250, Graphics.width / 2, 200);\
+            this._faceWindow = new Window_Selectable(rect);\
+            this._faceWindow.maxItems = () => faceList.length;\
+            this._faceWindow.itemRect = function(index) \{\
+                return new Rectangle(0, index * this.itemHeight(), this.width, this.itemHeight());\
+            \};\
+            this._faceWindow.drawItem = function(index) \{\
+                const rect = this.itemLineRect(index);\
+                this.drawText(faceList[index], rect.x, rect.y, rect.width, "center");\
+            \};\
+            this._faceWindow.setHandler("ok", this.onFaceOk.bind(this));\
+            this._faceWindow.setHandler("cancel", this.popScene.bind(this));\
+            this._faceWindow.select(0);\
+            this.addWindow(this._faceWindow);\
+        \}\
+    \
+        createHairWindow() \{\
+            // Window for selecting hair.\
+            const rect = new Rectangle(Graphics.width / 2, 250, Graphics.width / 2, 200);\
+            this._hairWindow = new Window_Selectable(rect);\
+            this._hairWindow.maxItems = () => hairList.length;\
+            this._hairWindow.itemRect = function(index) \{\
+                return new Rectangle(0, index * this.itemHeight(), this.width, this.itemHeight());\
+            \};\
+            this._hairWindow.drawItem = function(index) \{\
+                const rect = this.itemLineRect(index);\
+                this.drawText(hairList[index], rect.x, rect.y, rect.width, "center");\
+            \};\
+            this._hairWindow.setHandler("ok", this.onHairOk.bind(this));\
+            this._hairWindow.setHandler("cancel", this.popScene.bind(this));\
+            this._hairWindow.select(0);\
+            this.addWindow(this._hairWindow);\
+        \}\
+    \
+        createCommandWindow() \{\
+            // Command window to confirm the selection.\
+            const rect = new Rectangle(0, 460, Graphics.width, 60);\
+            this._commandWindow = new Window_Command(rect);\
+            this._commandWindow.makeCommandList = function() \{\
+                this.addCommand("Confirm", "confirm");\
+                this.addCommand("Cancel", "cancel");\
+            \};\
+            this._commandWindow.setHandler("confirm", this.onConfirm.bind(this));\
+            this._commandWindow.setHandler("cancel", this.popScene.bind(this));\
+            this.addWindow(this._commandWindow);\
+        \}\
+    \
+        onFaceOk() \{\
+            this._faceIndex = this._faceWindow.index();\
+            this.refreshPreview();\
+            this._hairWindow.activate();\
+        \}\
+    \
+        onHairOk() \{\
+            this._hairIndex = this._hairWindow.index();\
+            this.refreshPreview();\
+            this._commandWindow.activate();\
+        \}\
+    \
+        onConfirm() \{\
+            // Update the actor's character graphic with the composite key.\
+            const faceName = faceList[this._faceIndex];\
+            const hairName = hairList[this._hairIndex];\
+            const compositeName = "$SimpleGene|" + faceName + "|" + hairName;\
+            this.actor._characterName = compositeName;\
+            this.actor._characterIndex = 0;\
+            this.actor.refresh();\
+            SoundManager.playOk();\
+            this.popScene();\
+        \}\
+    \
+        popScene() \{\
+            SceneManager.pop();\
+        \}\
+    \}\
+    \
+    // Expose the scene to the global scope.\
+    window.Scene_SimpleCharacterCreator = Scene_SimpleCharacterCreator;\
+    \
+\})();}
