@@ -27,7 +27,13 @@ class Main {
 
     run() {
         this.showLoadingSpinner();
+        // this.xhrSucceeded = true;
         this.testXhr();
+        setTimeout(() => {
+            if (!this.xhrSucceeded && location.protocol !== "file:") {
+                this.xhrSucceeded = true;
+            }
+        }, 100);
         this.hookNwjsClose();
         this.loadMainScripts();
     }
@@ -83,6 +89,7 @@ class Main {
     onScriptLoad() {
         if (++this.loadCount === this.numScripts) {
             PluginManager.setup($plugins);
+            this.initEffekseerRuntime();
         }
     }
 
@@ -111,7 +118,7 @@ class Main {
     }
 
     onWindowLoad() {
-        if (!this.xhrSucceeded) {
+        if (!this.xhrSucceeded && location.protocol === "file:") {
             const message = "Your browser does not allow to read local files.";
             this.printError("Error", message);
         } else if (this.isPathRandomized()) {
@@ -119,8 +126,6 @@ class Main {
             this.printError("Error", message);
         } else if (this.error) {
             this.printError(this.error.name, this.error.message);
-        } else {
-            this.initEffekseerRuntime();
         }
     }
 
