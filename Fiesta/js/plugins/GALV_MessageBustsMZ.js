@@ -4,6 +4,7 @@
 //  For: RPGMAKER MV
 //  GALV_MessageBustsMZ.js
 //-----------------------------------------------------------------------------
+//  2025-05-26 - Version 1.3 - Updated Append to Prefix to allow /pictures sort
 //  2020-10-10 - Version 1.2 - added bust X and Y offsets to plugin settings
 //                             fixed error in text command
 //  2020-09-27 - Version 1.1 - fixed error in code when busts disabled and only
@@ -56,9 +57,9 @@ Galv.Mstyle = Galv.Mstyle || {};  // compatibility
  * @desc Amount of pixels that text is pushed to the right when a bust is displayed on the left.
  * @default 390
  *
- * @param fileAppend
- * @text Filename Append
- * @desc Text to append to the normal file path the plugin looks for.
+ * @param filePrefix
+ * @text Filename Prefix
+ * @desc Text to prefix to the normal file path the plugin looks for.
  * @default
  *
  * @param mStyleBusts
@@ -107,11 +108,11 @@ Galv.Mstyle = Galv.Mstyle || {};  // compatibility
  * If your 'Show Text' uses the 2nd face from the "Actor1" faces file, then
  * the plugin will use /img/pictures/Actor1_2.png for the bust image.
  *
- * The plugin setting called "Filename Append"
+ * The plugin setting called "Filename Prefix"
  * --------------------------------------------
- * Whatever you put in this setting will be added to the end of the filename.
- * Using the above example, if the Filename Append setting is "_bust", then the
- * plugin will use /img/pictures/Actor1_2_bust.png instead.
+ * Whatever you put in this setting will be added to the start of the filename.
+ * Using the above example, if the Filename Prefix setting is "Bust_", then the
+ * plugin will use /img/pictures/Bust_Actor1_2.png instead.
  *
  * Use 'wait' between messages with different character's busts
  * for better looking transitions.
@@ -166,7 +167,7 @@ Galv.Mstyle = Galv.Mstyle || {};  // compatibility
 	Galv.MB.bX = Number(PluginManager.parameters(Galv.MB.pluginName)["bX"]);
 	Galv.MB.bY = Number(PluginManager.parameters(Galv.MB.pluginName)["bY"]);
 	Galv.MB.w = Number(PluginManager.parameters(Galv.MB.pluginName)["xOffset"]);
-	Galv.MB.f = PluginManager.parameters(Galv.MB.pluginName)["fileAppend"];
+	Galv.MB.f = PluginManager.parameters(Galv.MB.pluginName)["filePrefix"];
 	Galv.MB.popWindow = PluginManager.parameters(Galv.MB.pluginName)["mStyleBusts"] == "true" && Imported.Galv_MessageStyles;
 	Galv.MB.msgWindow = null;
 	Galv.MB.bustHeight = 0;
@@ -341,7 +342,7 @@ Sprite_GalvBust.prototype.loadBitmap = function() {
 	if ($gameSystem.isBustDisabled()) {
 		img = ImageManager.loadPicture('');
 	} else {
-		img = ImageManager.loadPicture(name + Galv.MB.f);
+		img = ImageManager.loadPicture(Galv.MB.f + name);
 	};
 	if (img.isReady()) {
 		if (this.bitmap) {
@@ -349,13 +350,14 @@ Sprite_GalvBust.prototype.loadBitmap = function() {
 			this.bitmap = null;
 		};
 		this.bitmap = img;
-		this.name = name;
+		this.name = Galv.MB.f + name;
 		this.hasBust = true;
 	};
 };
 
 Sprite_GalvBust.prototype.controlBitmap = function() {
-	if ($gameMessage.faceName() && this.name !== $gameMessage.faceName() + "_" + ($gameMessage.faceIndex() + 1)) {
+	const newName = $gameMessage.faceName() + "_" + ($gameMessage.faceIndex() + 1);
+if ($gameMessage.faceName() && this.name !== Galv.MB.f + newName) {
     	this.loadBitmap();  // If image changed, reload bitmap
 	};
 	

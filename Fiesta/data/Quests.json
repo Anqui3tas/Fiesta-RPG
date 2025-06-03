@@ -1,0 +1,40 @@
+{
+  "quests": [
+    {
+      "key": "baby_steps",
+      "title": "Baby Steps",
+      "difficulty": "Easy",
+      "from": "Roumen Guide Remi",
+      "location": "Roumen",
+      "description": ["Introduce yourself to Guide Remi.", "Get your First Quest."],
+      "objectives": ["Speak to Guide Remi", "Receive starting quests"],
+      "rewards": ["5 EXP"],
+      "subtext": "A simple welcome to the village.",
+      "quote": "\"Every adventure starts with a first step.\""
+    },
+    {
+      "key": "slime_hunt",
+      "title": "Slime Hunt",
+      "difficulty": "Medium",
+      "from": "Scout Arin",
+      "location": "Field Outside Roumen",
+      "description": ["The nearby field has become overrun with slimes.", "Scout Arin has asked you to help clear them out."],
+      "objectives": ["Defeat 5 Slimes", "Return to Scout Arin"],
+      "rewards": ["150 EXP", "Potion x3"],
+      "subtext": "Time to show your combat skills.",
+      "quote": "\"They're just slimes. What could go wrong?\""
+    },
+    {
+      "key": "lost_necklace",
+      "title": "Lost Necklace",
+      "difficulty": "Hard",
+      "from": "Merchant Lira",
+      "location": "Market District",
+      "description": ["Lira lost her necklace in the forest.", "Find it and bring it back to her."],
+      "objectives": ["Search the Forest", "Recover the Necklace", "Return it to Lira"],
+      "rewards": ["200 EXP", "Gold Ring"],
+      "subtext": "A valuable item lost in dangerous territory.",
+      "quote": "\"Please... It's a family heirloom.\""
+    }
+  ]
+}
