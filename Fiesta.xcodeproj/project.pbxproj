@@ -9,6 +9,7 @@
 /* Begin PBXFileReference section */
 		66211B882E16D28C00081B7C /* Fiesta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fiesta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		662183182E16E04900081B7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6621835B2E16F23300081B7C /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -68,6 +69,7 @@
 		66211B7A2E16D28B00081B7C = {
 			isa = PBXGroup;
 			children = (
+				6621835B2E16F23300081B7C /* ReadMe.md */,
 				66211B7F2E16D28B00081B7C /* Fiesta Shared */,
 				66211B8A2E16D28C00081B7C /* Fiesta */,
 				66211B892E16D28C00081B7C /* Products */,
